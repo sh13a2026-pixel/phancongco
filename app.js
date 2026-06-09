@@ -224,12 +224,92 @@ function updateStats() {
 }
 
 // 3. SEARCH & HIGHLIGHT
+function onSearchFocus() {
+  const input = document.getElementById('search-input');
+  if (input.value.trim() === "") {
+    showAllDelegatesDropdown();
+  }
+}
+
+function toggleFullList(event) {
+  event.stopPropagation();
+  const resultsDropdown = document.getElementById('search-results');
+  const icon = document.getElementById('dropdown-icon');
+  
+  if (resultsDropdown.style.display === 'block') {
+    resultsDropdown.style.display = 'none';
+    icon.className = "fa-solid fa-chevron-down";
+  } else {
+    showAllDelegatesDropdown();
+    icon.className = "fa-solid fa-chevron-up";
+  }
+}
+
+function showAllDelegatesDropdown() {
+  const resultsDropdown = document.getElementById('search-results');
+  const list = [];
+  
+  seatingData.forEach((table, tIndex) => {
+    table.seats.forEach((seat, sIndex) => {
+      if (seat.name.trim() !== "") {
+        list.push({
+          name: seat.name,
+          tableNumber: table.tableNumber,
+          seatId: seat.id,
+          tIndex,
+          sIndex
+        });
+      }
+    });
+  });
+
+  // Sắp xếp bảng chữ cái tiếng Việt
+  list.sort((a, b) => a.name.localeCompare(b.name, 'vi'));
+
+  if (list.length === 0) {
+    resultsDropdown.innerHTML = `<div class="result-item" style="color: var(--text-secondary); cursor: default;">Chưa xếp đại biểu nào</div>`;
+    resultsDropdown.style.display = 'block';
+    return;
+  }
+
+  resultsDropdown.innerHTML = "";
+  list.forEach(match => {
+    const item = document.createElement('div');
+    item.className = 'result-item';
+    item.innerHTML = `
+      <span>${match.name}</span>
+      <span class="table-badge">Mâm ${match.tableNumber} - Ghế ${match.seatId}</span>
+    `;
+    item.onclick = () => {
+      selectDelegate(match);
+      const icon = document.getElementById('dropdown-icon');
+      if (icon) icon.className = "fa-solid fa-chevron-down";
+    };
+    resultsDropdown.appendChild(item);
+  });
+  resultsDropdown.style.display = 'block';
+}
+
+// Đóng dropdown khi click ra ngoài
+document.addEventListener('click', (e) => {
+  const dropdown = document.getElementById('search-results');
+  const inputContainer = document.querySelector('.search-box-container');
+  if (dropdown && inputContainer && !inputContainer.contains(e.target)) {
+    dropdown.style.display = 'none';
+    const icon = document.getElementById('dropdown-icon');
+    if (icon) icon.className = "fa-solid fa-chevron-down";
+  }
+});
+
 function onSearchInput() {
   const query = removeVietnameseTones(document.getElementById('search-input').value);
   const resultsDropdown = document.getElementById('search-results');
+  const icon = document.getElementById('dropdown-icon');
   
+  if (icon) icon.className = "fa-solid fa-chevron-down";
+
   if (!query) {
-    resultsDropdown.style.display = 'none';
+    showAllDelegatesDropdown();
     return;
   }
 
@@ -301,6 +381,9 @@ function selectDelegate(delegate) {
   if (miniSeat) {
     miniSeat.classList.add('active-target');
   }
+
+  // Vẽ đường dẫn định vị lối đi
+  drawRoutingPath(delegate.tableNumber);
 }
 
 function clearSearch() {
@@ -313,7 +396,55 @@ function clearSearch() {
   // Remove highlights
   document.querySelectorAll('.table-node').forEach(n => n.classList.remove('highlighted'));
   document.querySelectorAll('.mini-seat').forEach(s => s.classList.remove('active-target'));
+
+  // Xóa đường dẫn định vị
+  clearRoutingPath();
 }
+
+// Logic vẽ đường đi định vị
+function drawRoutingPath(tableNum) {
+  const svg = document.getElementById('routing-path-svg');
+  const table = document.getElementById(`table-${tableNum}`);
+  const entrance = document.getElementById('entrance-node');
+
+  if (!svg || !table || !entrance) return;
+
+  // Đợi trình duyệt render xong vị trí
+  requestAnimationFrame(() => {
+    const svgRect = svg.getBoundingClientRect();
+    const tableRect = table.getBoundingClientRect();
+    const entranceRect = entrance.getBoundingClientRect();
+
+    // Điểm đến: Tâm của bàn ăn mâm cỗ (tọa độ tương đối trong SVG)
+    const tx = tableRect.left - svgRect.left + tableRect.width / 2;
+    const ty = tableRect.top - svgRect.top + tableRect.height / 2;
+
+    // Điểm đi: Phía trên lối vào chính
+    const ex = entranceRect.left - svgRect.left + entranceRect.width / 2;
+    const ey = entranceRect.top - svgRect.top;
+
+    // Điểm uốn cong ở giữa cho đẹp mắt
+    const cx = (ex + tx) / 2 + (tx > ex ? -60 : 60);
+    const cy = (ey + ty) / 2;
+
+    const pathData = `M ${ex} ${ey} Q ${cx} ${cy} ${tx} ${ty}`;
+    
+    // Đưa đường vẽ động vào SVG
+    svg.innerHTML = `<path d="${pathData}" />`;
+  });
+}
+
+function clearRoutingPath() {
+  const svg = document.getElementById('routing-path-svg');
+  if (svg) svg.innerHTML = "";
+}
+
+// Tự động vẽ lại đường đi khi co giãn trình duyệt
+window.addEventListener('resize', () => {
+  if (selectedDelegate) {
+    drawRoutingPath(selectedDelegate.tableNumber);
+  }
+});
 
 function focusAssignedSeat() {
   if (selectedDelegate) {

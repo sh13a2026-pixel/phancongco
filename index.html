@@ -60,10 +60,13 @@
         <!-- Search & Welcome Area -->
         <div class="search-hero glass-panel">
           <h2>KÍNH CHÀO QUÝ ĐẠI BIỂU</h2>
-          <p>Vui lòng nhập tên của quý khách để tìm kiếm vị trí ngồi được sắp xếp</p>
+          <p>Nhập tên hoặc chọn trực tiếp từ danh sách đại biểu để định vị chỗ ngồi</p>
           <div class="search-box-container">
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" id="search-input" placeholder="Nhập tên đại biểu (ví dụ: Nguyễn Văn A)..." oninput="onSearchInput()">
+            <input type="text" id="search-input" placeholder="Nhập tên đại biểu (ví dụ: Nguyễn Văn A)..." oninput="onSearchInput()" onfocus="onSearchFocus()">
+            <button class="dropdown-trigger-btn" onclick="toggleFullList(event)" title="Xem toàn bộ danh sách">
+              <i class="fa-solid fa-chevron-down" id="dropdown-icon"></i>
+            </button>
             <button class="clear-btn" id="clear-search" onclick="clearSearch()" style="display: none;">
               <i class="fa-solid fa-xmark"></i>
             </button>
@@ -86,7 +89,7 @@
         <!-- Room Layout Visualization -->
         <div class="layout-section glass-panel">
           <div class="section-title">
-            <h3><i class="fa-solid fa-map-location-dot"></i> SƠ ĐỒ PHÒNG TIỆC</h3>
+            <h3><i class="fa-solid fa-map-location-dot"></i> ĐỊNH VỊ PHÒNG TIỆC</h3>
             <div class="legend">
               <span class="legend-item"><span class="color-dot available"></span> Còn trống</span>
               <span class="legend-item"><span class="color-dot occupied"></span> Đã xếp</span>
@@ -94,7 +97,10 @@
             </div>
           </div>
           
-          <div class="hall-wrapper">
+          <div class="hall-wrapper" style="position: relative;">
+            <!-- SVG path overlay for indoor routing -->
+            <svg id="routing-path-svg" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:10;"></svg>
+            
             <!-- Main Stage / Sân Khấu -->
             <div class="stage">SÂN KHẤU CHÍNH</div>
             
@@ -102,6 +108,9 @@
             <div class="tables-grid" id="tables-container">
               <!-- Dynamically generated in app.js -->
             </div>
+
+            <!-- Entrance / Lối vào -->
+            <div class="entrance" id="entrance-node"><i class="fa-solid fa-door-open"></i> LỐI VÀO CHÍNH</div>
           </div>
         </div>
       </section>
