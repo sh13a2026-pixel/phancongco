@@ -278,11 +278,11 @@ function updateLayoutCols() {
 }
 
 function isNamesDisplayEnabled() {
-  const checkbox = document.getElementById('toggle-names-checkbox');
-  if (checkbox) return checkbox.checked;
-  
   const saved = localStorage.getItem('banquet_show_names');
   if (saved !== null) return saved === 'true';
+
+  const checkbox = document.getElementById('toggle-names-checkbox');
+  if (checkbox) return checkbox.checked;
   
   return window.innerWidth > 768;
 }
