@@ -4,6 +4,8 @@
 let seatingData = []; // Array of 20 tables, each having an array of 8 seat objects: { id: 1..8, name: "" }
 let appBaseUrl = "";
 let selectedDelegate = null; // { name, tableIndex, seatIndex }
+let layoutConfig = { colsPc: 4, colsMobile: 2 };
+let firebaseColsRef = null;
 
 // CẤU HÌNH KẾT NỐI REALTIME (FIREBASE)
 // Sau khi tạo dự án Firebase Realtime Database miễn phí, hãy dán cấu hình của bạn vào đây:
@@ -64,13 +66,35 @@ function removeVietnameseTones(str) {
 
 // Initialize default data (Tải đồng bộ từ data.json nếu có, nếu không dùng localStorage)
 async function initDefaultData() {
+  // Load layout config từ localStorage trước
+  const localLayout = localStorage.getItem('banquet_layout_config');
+  if (localLayout) {
+    try {
+      layoutConfig = JSON.parse(localLayout);
+    } catch (e) {
+      layoutConfig = { colsPc: 4, colsMobile: 2 };
+    }
+  }
+  applyLayoutCols(layoutConfig.colsPc, layoutConfig.colsMobile);
+
   // Kích hoạt kết nối Firebase Realtime nếu được cấu hình
   if (firebaseConfig.databaseURL && typeof firebase !== 'undefined') {
     try {
       firebase.initializeApp(firebaseConfig);
       firebaseDbRef = firebase.database().ref('seating_data');
+      firebaseColsRef = firebase.database().ref('layout_config');
       isFirebaseActive = true;
       console.log("Đã kết nối thành công tới Firebase Realtime Database.");
+      
+      // Lắng nghe cấu hình cột thời gian thực
+      firebaseColsRef.on('value', (snapshot) => {
+        const val = snapshot.val();
+        if (val && val.colsPc && val.colsMobile) {
+          layoutConfig = val;
+          localStorage.setItem('banquet_layout_config', JSON.stringify(layoutConfig));
+          applyLayoutCols(layoutConfig.colsPc, layoutConfig.colsMobile);
+        }
+      });
       
       // Lắng nghe sự kiện thay đổi dữ liệu thời gian thực
       firebaseDbRef.on('value', (snapshot) => {
@@ -177,9 +201,12 @@ function saveToLocalStorage() {
 
 function syncDataToFirebase() {
   if (isFirebaseActive && firebaseDbRef) {
-    firebaseDbRef.set(seatingData)
+    Promise.all([
+      firebaseDbRef.set(seatingData),
+      firebaseColsRef ? firebaseColsRef.set(layoutConfig) : Promise.resolve()
+    ])
       .then(() => {
-        alert("Đã đồng bộ lên mạng thành công! Từ bây giờ tất cả thiết bị khác quét mã QR sẽ thấy sơ đồ mâm cỗ mới ngay lập tức mà không cần tải lại trang.");
+        alert("Đã đồng bộ lên mạng thành công! Từ bây giờ tất cả thiết bị khác quét mã QR sẽ thấy sơ đồ mâm cỗ và cấu hình hiển thị mới ngay lập tức mà không cần tải lại trang.");
       })
       .catch((error) => {
         console.error("Lỗi đồng bộ Firebase:", error);
@@ -194,6 +221,41 @@ function saveAppUrl() {
   const urlInput = document.getElementById('app-base-url').value.trim();
   appBaseUrl = urlInput || (window.location.origin + window.location.pathname.replace(/\/$/, ""));
   localStorage.setItem('banquet_app_url', appBaseUrl);
+}
+
+function applyLayoutCols(colsPc, colsMobile) {
+  const root = document.documentElement;
+  root.style.setProperty('--cols-desktop', colsPc);
+  root.style.setProperty('--cols-mobile', colsMobile);
+
+  const pcSelect = document.getElementById('cols-pc-select');
+  const mobileSelect = document.getElementById('cols-mobile-select');
+  if (pcSelect) pcSelect.value = colsPc;
+  if (mobileSelect) mobileSelect.value = colsMobile;
+
+  // Redraw routing path if a delegate is selected
+  if (selectedDelegate) {
+    drawRoutingPath(selectedDelegate.tableNumber);
+  }
+}
+
+function updateLayoutCols() {
+  const pcSelect = document.getElementById('cols-pc-select');
+  const mobileSelect = document.getElementById('cols-mobile-select');
+  if (!pcSelect || !mobileSelect) return;
+
+  const colsPc = parseInt(pcSelect.value);
+  const colsMobile = parseInt(mobileSelect.value);
+
+  layoutConfig = { colsPc, colsMobile };
+  localStorage.setItem('banquet_layout_config', JSON.stringify(layoutConfig));
+  applyLayoutCols(colsPc, colsMobile);
+
+  if (isFirebaseActive && firebaseColsRef) {
+    firebaseColsRef.set(layoutConfig).catch(err => {
+      console.error("Lỗi đồng bộ cấu hình cột lên Firebase:", err);
+    });
+  }
 }
 
 // 2. RENDERING VIEWS

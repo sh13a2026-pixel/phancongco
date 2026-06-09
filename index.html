@@ -128,6 +128,30 @@
               <small class="help-text">Ví dụ: https://mysite.github.io/wedding</small>
             </div>
 
+            <div class="control-group" style="border-top: 1px solid var(--border-glass); padding-top: 15px;">
+              <label style="font-weight: 600;"><i class="fa-solid fa-table-cells-large"></i> Số cột sơ đồ mâm cỗ:</label>
+              <div style="display: flex; gap: 10px; margin-top: 5px;">
+                <div style="flex: 1;">
+                  <label for="cols-pc-select" style="font-size: 0.8rem; margin-bottom: 4px; display: block;">Máy tính (PC):</label>
+                  <select id="cols-pc-select" onchange="updateLayoutCols()" style="width: 100%; padding: 8px; border-radius: 8px; border: 1.5px solid var(--border-glass); background: var(--bg-secondary); color: var(--text-primary); font-family: var(--font-sans); outline: none;">
+                    <option value="1">1 cột</option>
+                    <option value="2">2 cột</option>
+                    <option value="3">3 cột</option>
+                    <option value="4" selected>4 cột</option>
+                  </select>
+                </div>
+                <div style="flex: 1;">
+                  <label for="cols-mobile-select" style="font-size: 0.8rem; margin-bottom: 4px; display: block;">Điện thoại:</label>
+                  <select id="cols-mobile-select" onchange="updateLayoutCols()" style="width: 100%; padding: 8px; border-radius: 8px; border: 1.5px solid var(--border-glass); background: var(--bg-secondary); color: var(--text-primary); font-family: var(--font-sans); outline: none;">
+                    <option value="1">1 cột</option>
+                    <option value="2" selected>2 cột</option>
+                    <option value="3">3 cột</option>
+                    <option value="4">4 cột</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
             <div class="action-buttons-group">
               <button class="btn btn-primary" style="background: linear-gradient(135deg, #27ae60 0%, #219653 100%); color: white;" onclick="syncDataToFirebase()" title="Lưu dữ liệu trực tuyến ngay lập tức">
                 <i class="fa-solid fa-cloud-arrow-up"></i> Lưu & Đồng Bộ Lên Mạng

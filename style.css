@@ -469,7 +469,7 @@ body {
 
 .tables-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(var(--cols-desktop, 4), 1fr);
   gap: 25px;
   width: 100%;
   max-width: 1000px;
@@ -1150,7 +1150,7 @@ body {
     grid-template-columns: 1fr;
   }
   .tables-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(var(--cols-desktop, 4), 1fr);
   }
 }
 
@@ -1176,7 +1176,7 @@ body {
   }
 
   .tables-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(var(--cols-mobile, 2), 1fr);
   }
   
   .admin-seats-grid {
@@ -1201,7 +1201,7 @@ body {
   }
 
   .tables-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(var(--cols-mobile, 2), 1fr);
     gap: 12px;
   }
   
