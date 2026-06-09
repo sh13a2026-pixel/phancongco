@@ -1,21 +1,21 @@
-/* PREMIUM DESIGN SYSTEM - BANQUET SEATING PWA (LIGHT THEME) */
+/* PREMIUM DESIGN SYSTEM - BANQUET SEATING PWA (LUXURY LIGHT THEME) */
 :root {
-  --bg-primary: #f2f5f3;
+  --bg-primary: #FAF8F5;
   --bg-secondary: #ffffff;
-  --bg-glass: rgba(255, 255, 255, 0.85);
-  --border-glass: rgba(15, 68, 27, 0.12);
-  --gold-light: #806300;
-  --gold-main: #b8860b;
-  --gold-dark: #6e5000;
-  --text-primary: #1b2e22;
-  --text-secondary: #556b5c;
-  --accent-color: #d63031;
-  --danger-color: #d63031;
+  --bg-glass: rgba(255, 255, 255, 0.92);
+  --border-glass: rgba(197, 160, 89, 0.22);
+  --gold-light: #9c7823;
+  --gold-main: #c59b27;
+  --gold-dark: #8c6810;
+  --text-primary: #1c2721;
+  --text-secondary: #607066;
+  --accent-color: #b33939; /* Đỏ nhung quân đội */
+  --danger-color: #b33939;
   --success-color: #27ae60;
-  --available-color: #e3ebd9;
+  --available-color: #f2efe9;
   --font-display: 'Playfair Display', Georgia, serif;
   --font-sans: 'Outfit', sans-serif;
-  --shadow-premium: 0 10px 30px rgba(15, 68, 27, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --shadow-premium: 0 15px 40px rgba(197, 160, 89, 0.08), 0 1px 4px rgba(0, 0, 0, 0.02);
   --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -32,8 +32,8 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   background-image: 
-    radial-gradient(circle at 10% 20%, rgba(39, 174, 96, 0.05) 0%, transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(184, 134, 11, 0.06) 0%, transparent 40%);
+    radial-gradient(circle at 5% 10%, rgba(197, 160, 89, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 95% 90%, rgba(179, 57, 57, 0.03) 0%, transparent 45%);
   background-attachment: fixed;
 }
 
@@ -451,17 +451,20 @@ body {
 }
 
 .stage {
-  width: 80%;
+  width: 85%;
   max-width: 600px;
-  background: linear-gradient(90deg, rgba(20, 26, 49, 0.8), rgba(42, 57, 144, 0.3), rgba(20, 26, 49, 0.8));
-  border: 1.5px solid var(--border-glass);
-  border-radius: 10px;
-  padding: 15px;
+  background: linear-gradient(135deg, #7f0f0f 0%, #b33939 50%, #7f0f0f 100%);
+  border: 2px solid var(--gold-main);
+  border-radius: 12px;
+  padding: 18px;
   text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: 4px;
-  color: var(--gold-light);
-  box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.1);
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 25px rgba(179, 57, 57, 0.15), inset 0 0 15px rgba(251, 230, 188, 0.3);
 }
 
 .tables-grid {
