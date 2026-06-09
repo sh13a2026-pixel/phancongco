@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sơ đồ Vị trí Mâm Cỗ & QR Code</title>
+  <meta name="description" content="Ứng dụng phân công và tìm kiếm vị trí ngồi mâm cỗ trực quan dành cho đại biểu.">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#c5a880">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <!-- Fonts Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="glass-header">
+      <div class="logo">
+        <svg viewBox="0 0 512 512" width="40" height="40">
+          <circle cx="256" cy="256" r="220" fill="none" stroke="url(#logo-gold)" stroke-width="12" />
+          <circle cx="256" cy="256" r="100" fill="none" stroke="url(#logo-gold)" stroke-width="6" opacity="0.5" />
+          <circle cx="256" cy="100" r="18" fill="url(#logo-gold)" />
+          <circle cx="366" cy="146" r="18" fill="url(#logo-gold)" />
+          <circle cx="412" cy="256" r="18" fill="url(#logo-gold)" />
+          <circle cx="366" cy="366" r="18" fill="url(#logo-gold)" />
+          <circle cx="256" cy="412" r="18" fill="url(#logo-gold)" />
+          <circle cx="146" cy="366" r="18" fill="url(#logo-gold)" />
+          <circle cx="100" cy="256" r="18" fill="url(#logo-gold)" />
+          <circle cx="146" cy="146" r="18" fill="url(#logo-gold)" />
+          <defs>
+            <linearGradient id="logo-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f3e0b5" />
+              <stop offset="100%" stop-color="#d4af37" />
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="title-group">
+          <h1>SƠ ĐỒ MÂM CỖ</h1>
+          <p class="subtitle">Hội Nghị & Sự Kiện Sang Trọng</p>
+        </div>
+      </div>
+      <div class="nav-tabs">
+        <button id="tab-guest" class="tab-btn active" onclick="switchTab('guest')">
+          <i class="fa-solid fa-chair"></i> Tìm Chỗ Ngồi
+        </button>
+        <button id="tab-admin" class="tab-btn" onclick="switchTab('admin')">
+          <i class="fa-solid fa-user-gear"></i> Quản Trị Viên
+        </button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- GUEST VIEW -->
+      <section id="view-guest" class="tab-content active">
+        <!-- Search & Welcome Area -->
+        <div class="search-hero glass-panel">
+          <h2>KÍNH CHÀO QUÝ ĐẠI BIỂU</h2>
+          <p>Vui lòng nhập tên của quý khách để tìm kiếm vị trí ngồi được sắp xếp</p>
+          <div class="search-box-container">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="search-input" placeholder="Nhập tên đại biểu (ví dụ: Nguyễn Văn A)..." oninput="onSearchInput()">
+            <button class="clear-btn" id="clear-search" onclick="clearSearch()" style="display: none;">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="search-results" class="search-results-dropdown"></div>
+          </div>
+          <div id="welcome-card" class="welcome-card" style="display: none;">
+            <div class="welcome-badge"><i class="fa-solid fa-envelope-open-text"></i> THƯ MỜI</div>
+            <h3>Kính chào Ông/Bà <span id="welcome-name" class="highlight-gold">...</span></h3>
+            <p>Ban tổ chức trân trọng kính mời quý khách dùng tiệc tại:</p>
+            <div class="location-details">
+              <div class="detail-pill"><strong>MÂM SỐ:</strong> <span id="welcome-table">--</span></div>
+              <div class="detail-pill"><strong>GHẾ SỐ:</strong> <span id="welcome-seat">--</span></div>
+            </div>
+            <button class="show-location-btn" onclick="focusAssignedSeat()">
+              <i class="fa-solid fa-location-crosshairs"></i> Chỉ Đường Trên Sơ Đồ
+            </button>
+          </div>
+        </div>
+
+        <!-- Room Layout Visualization -->
+        <div class="layout-section glass-panel">
+          <div class="section-title">
+            <h3><i class="fa-solid fa-map-location-dot"></i> SƠ ĐỒ PHÒNG TIỆC</h3>
+            <div class="legend">
+              <span class="legend-item"><span class="color-dot available"></span> Còn trống</span>
+              <span class="legend-item"><span class="color-dot occupied"></span> Đã xếp</span>
+              <span class="legend-item"><span class="color-dot active-glow"></span> Ghế của bạn</span>
+            </div>
+          </div>
+          
+          <div class="hall-wrapper">
+            <!-- Main Stage / Sân Khấu -->
+            <div class="stage">SÂN KHẤU CHÍNH</div>
+            
+            <!-- Tables Grid Layout (20 tables) -->
+            <div class="tables-grid" id="tables-container">
+              <!-- Dynamically generated in app.js -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ADMIN VIEW -->
+      <section id="view-admin" class="tab-content">
+        <div class="admin-grid">
+          <!-- Left side: Configuration & Tools -->
+          <div class="admin-sidebar glass-panel">
+            <h3><i class="fa-solid fa-sliders"></i> THIẾT LẬP NHANH</h3>
+            
+            <div class="control-group">
+              <label>Đường dẫn trang web hiện tại (Dùng để tạo QR Code chính xác):</label>
+              <input type="text" id="app-base-url" placeholder="https://domain.com/path" onchange="saveAppUrl()">
+              <small class="help-text">Ví dụ: https://mysite.github.io/wedding</small>
+            </div>
+
+            <div class="action-buttons-group">
+              <button class="btn btn-primary" onclick="generateGeneralQr()">
+                <i class="fa-solid fa-qrcode"></i> QR Tìm Kiếm Chung
+              </button>
+              <button class="btn btn-secondary" onclick="exportData()">
+                <i class="fa-solid fa-file-export"></i> Xuất File Cấu Hình
+              </button>
+              <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">
+                <i class="fa-solid fa-file-import"></i> Nhập File Cấu Hình
+              </button>
+              <input type="file" id="import-file" style="display: none;" onchange="importData(event)">
+              <button class="btn btn-danger" onclick="resetAllData()">
+                <i class="fa-solid fa-trash-can"></i> Xóa Toàn Bộ Dữ Liệu
+              </button>
+            </div>
+
+            <!-- Import excel/list -->
+            <div class="control-group list-import-area">
+              <h4><i class="fa-solid fa-users-line"></i> Nhập Danh Sách Nhanh</h4>
+              <p class="help-text">Nhập mỗi dòng một tên đại biểu để tự động phân bổ vào 20 mâm (mỗi mâm 8 người, tối đa 160 đại biểu).</p>
+              <textarea id="bulk-names-input" rows="8" placeholder="Nguyễn Văn A&#10;Trần Thị B&#10;Lê Văn C..."></textarea>
+              <button class="btn btn-accent" onclick="processBulkImport()">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> Tự Động Phân Bổ Ghế
+              </button>
+            </div>
+          </div>
+
+          <!-- Right side: Table Matrix -->
+          <div class="admin-main-panel glass-panel">
+            <div class="panel-header">
+              <h3><i class="fa-solid fa-table-cells"></i> DANH SÁCH 20 MÂM TIỆC</h3>
+              <div class="stats-badge">
+                Đã xếp: <span id="stats-assigned">0</span>/160 đại biểu
+              </div>
+            </div>
+            
+            <div class="admin-tables-list" id="admin-tables-container">
+              <!-- Dynamically generated in app.js -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal details zoom (Show table seat details) -->
+    <div id="table-modal" class="modal-overlay" onclick="closeModal(event)">
+      <div class="modal-content glass-panel" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeModal(null)"><i class="fa-solid fa-xmark"></i></button>
+        <h3 id="modal-table-title">Mâm số X</h3>
+        <p class="modal-subtitle">Sơ đồ vị trí ngồi chi tiết (8 Ghế)</p>
+        
+        <div class="table-zoom-container">
+          <!-- Outer circle (Chairs) -->
+          <div class="seats-ring" id="modal-seats-ring">
+            <!-- Dynamically generated chairs in app.js -->
+          </div>
+          <!-- Center table circle -->
+          <div class="center-table-plate">
+            <span id="center-table-label">MÂM X</span>
+          </div>
+        </div>
+        
+        <div class="modal-seats-list" id="modal-seats-list">
+          <!-- List of names for easy reading on mobile -->
+        </div>
+      </div>
+    </div>
+
+    <!-- QR Modal Viewer -->
+    <div id="qr-modal" class="modal-overlay" onclick="closeQrModal(event)">
+      <div class="modal-content glass-panel qr-modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeQrModal(null)"><i class="fa-solid fa-xmark"></i></button>
+        <h3 id="qr-modal-title">Mã QR Code</h3>
+        <p id="qr-modal-subtitle" class="modal-subtitle">Quét mã QR để mở trang tra cứu</p>
+        
+        <div class="qr-canvas-holder">
+          <canvas id="qr-canvas"></canvas>
+        </div>
+        <div class="qr-url-text" id="qr-url-text"></div>
+        <div class="qr-actions">
+          <button class="btn btn-accent" onclick="downloadQrCode()">
+            <i class="fa-solid fa-download"></i> Tải Mã QR
+          </button>
+          <button class="btn btn-secondary" onclick="printQrCode()">
+            <i class="fa-solid fa-print"></i> In Mã QR
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load QRious locally download-proof library -->
+  <script src="qrious.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // Register Service Worker for PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then((reg) => console.log('Service Worker registered successfully!', reg.scope))
+          .catch((err) => console.error('Service Worker registration failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>

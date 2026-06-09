@@ -1,0 +1,18 @@
+{
+  "short_name": "Sơ đồ Mâm Cỗ",
+  "name": "Hệ thống Sơ đồ Vị trí Mâm Cỗ & QR Code",
+  "description": "Ứng dụng trực quan hiển thị và phân công vị trí ngồi mâm cỗ cho đại biểu.",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#0c0f1d",
+  "theme_color": "#c5a880",
+  "display": "standalone",
+  "orientation": "portrait"
+}
