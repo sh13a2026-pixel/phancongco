@@ -28,18 +28,39 @@ function removeVietnameseTones(str) {
   return str.toLowerCase().trim();
 }
 
-// Initialize default data
-function initDefaultData() {
-  const localData = localStorage.getItem('banquet_seating_data');
-  if (localData) {
-    try {
-      seatingData = JSON.parse(localData);
-    } catch (e) {
-      console.error("Lỗi parse data local, tạo mới.", e);
+// Initialize default data (Tải đồng bộ từ data.json nếu có, nếu không dùng localStorage)
+async function initDefaultData() {
+  let loadedData = null;
+  try {
+    // Thử tải data.json từ máy chủ (nếu chạy online hoặc đã đẩy file lên repo GitHub)
+    const response = await fetch('data.json?t=' + new Date().getTime());
+    if (response.ok) {
+      const remoteData = await response.json();
+      if (Array.isArray(remoteData) && remoteData.length === 20) {
+        loadedData = remoteData;
+        console.log("Đã tải dữ liệu mâm cỗ đồng bộ từ data.json");
+      }
+    }
+  } catch (e) {
+    console.log("Không tìm thấy data.json hoặc chưa chạy trên máy chủ, sử dụng dữ liệu localStorage cục bộ.");
+  }
+
+  if (loadedData) {
+    seatingData = loadedData;
+    // Đồng bộ ngược lại localStorage để hoạt động offline sau đó
+    localStorage.setItem('banquet_seating_data', JSON.stringify(seatingData));
+  } else {
+    const localData = localStorage.getItem('banquet_seating_data');
+    if (localData) {
+      try {
+        seatingData = JSON.parse(localData);
+      } catch (e) {
+        console.error("Lỗi parse data local, tạo mới.", e);
+        generateEmptyData();
+      }
+    } else {
       generateEmptyData();
     }
-  } else {
-    generateEmptyData();
   }
 
   // App URL setup
@@ -47,7 +68,6 @@ function initDefaultData() {
   if (savedUrl) {
     appBaseUrl = savedUrl;
   } else {
-    // Fallback to current window origin + path
     appBaseUrl = window.location.origin + window.location.pathname.replace(/\/$/, "");
   }
   document.getElementById('app-base-url').value = appBaseUrl;
@@ -87,25 +107,30 @@ function renderGuestLayout() {
   seatingData.forEach((table, tIndex) => {
     const occupiedCount = table.seats.filter(s => s.name.trim() !== "").length;
     
+    // Tạo phần tử bọc ngoài (Wrapper)
+    const wrapper = document.createElement('div');
+    wrapper.className = 'table-node-wrapper';
+    wrapper.id = `table-wrapper-${table.tableNumber}`;
+
+    // Tạo mâm cỗ (Circle node)
     const tableNode = document.createElement('div');
     tableNode.className = 'table-node';
     tableNode.id = `table-${table.tableNumber}`;
     tableNode.onclick = () => openTableModal(tIndex);
 
-    // Render table text
+    // Vẽ text mâm và số lượng
     tableNode.innerHTML = `
       <span class="table-num">Mâm ${table.tableNumber}</span>
       <span class="table-count">${occupiedCount}/8</span>
     `;
 
-    // Render 8 mini seats around the table node
+    // Vẽ 8 ghế mini xung quanh mâm cỗ
     const seatsIndicator = document.createElement('div');
     seatsIndicator.className = 'mini-seats-indicator';
     
     for (let s = 0; s < 8; s++) {
       const angle = (s * 45 - 90) * (Math.PI / 180);
-      // Position mini seats radially
-      const radius = 52; // percentage/offset
+      const radius = 52; // Tỷ lệ khoảng cách
       const x = 50 + radius * Math.cos(angle);
       const y = 50 + radius * Math.sin(angle);
       
@@ -117,7 +142,6 @@ function renderGuestLayout() {
         seatPill.classList.add('occupied');
       }
       
-      // Keep ID to highlight specifically
       seatPill.id = `mini-seat-${table.tableNumber}-${s + 1}`;
       seatPill.style.left = `${x}%`;
       seatPill.style.top = `${y}%`;
@@ -126,7 +150,33 @@ function renderGuestLayout() {
     }
     
     tableNode.appendChild(seatsIndicator);
-    container.appendChild(tableNode);
+    wrapper.appendChild(tableNode);
+
+    // Vẽ danh sách tên đại biểu hiển thị trực quan ngay dưới mâm cỗ
+    const namesList = document.createElement('div');
+    namesList.className = 'table-names-list';
+
+    const occupiedSeats = table.seats.filter(s => s.name.trim() !== "");
+    if (occupiedSeats.length > 0) {
+      occupiedSeats.forEach(seat => {
+        const isTarget = selectedDelegate && 
+                         selectedDelegate.tableNumber === table.tableNumber && 
+                         selectedDelegate.seatId === seat.id;
+        
+        const nameItem = document.createElement('div');
+        nameItem.className = `name-item ${isTarget ? 'highlighted-name' : ''}`;
+        nameItem.textContent = seat.name;
+        namesList.appendChild(nameItem);
+      });
+    } else {
+      const emptyItem = document.createElement('div');
+      emptyItem.className = 'name-item empty';
+      emptyItem.textContent = 'Mâm trống';
+      namesList.appendChild(emptyItem);
+    }
+
+    wrapper.appendChild(namesList);
+    container.appendChild(wrapper);
   });
 }
 
@@ -754,8 +804,27 @@ function checkUrlParameters() {
   }
 }
 
-// Tab Switching logic
+// Tab Switching logic with password protection
+let nextTabAfterLogin = "";
+
 function switchTab(tabName) {
+  if (tabName === 'admin') {
+    // Show login modal instead of switching immediately
+    nextTabAfterLogin = 'admin';
+    document.getElementById('admin-password-input').value = "";
+    document.getElementById('login-error-msg').style.display = 'none';
+    document.getElementById('admin-login-modal').classList.add('active');
+    // Đợi modal mở ra rồi mới focus
+    setTimeout(() => {
+      document.getElementById('admin-password-input').focus();
+    }, 100);
+    return;
+  }
+  
+  executeTabSwitch(tabName);
+}
+
+function executeTabSwitch(tabName) {
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
 
@@ -770,9 +839,25 @@ function switchTab(tabName) {
   }
 }
 
+function submitAdminPassword() {
+  const pwd = document.getElementById('admin-password-input').value;
+  if (pwd === '111996') {
+    document.getElementById('admin-login-modal').classList.remove('active');
+    executeTabSwitch(nextTabAfterLogin);
+  } else {
+    document.getElementById('login-error-msg').style.display = 'block';
+  }
+}
+
+function closeAdminLoginModal(e) {
+  if (e === null || e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close')) {
+    document.getElementById('admin-login-modal').classList.remove('active');
+  }
+}
+
 // 8. ON APP LOAD
-window.addEventListener('DOMContentLoaded', () => {
-  initDefaultData();
+window.addEventListener('DOMContentLoaded', async () => {
+  await initDefaultData();
   renderGuestLayout();
   checkUrlParameters();
 });

@@ -1,0 +1,22 @@
+[
+  {"tableNumber":1,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":2,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":3,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":4,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":5,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":6,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":7,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":8,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":9,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":10,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":11,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":12,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":13,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":14,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":15,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":16,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":17,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":18,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":19,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
+  {"tableNumber":20,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]}
+]

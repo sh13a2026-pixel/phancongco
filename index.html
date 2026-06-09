@@ -216,6 +216,19 @@
           </button>
         </div>
       </div>
+    <!-- Admin Login Modal -->
+    <div id="admin-login-modal" class="modal-overlay" onclick="closeAdminLoginModal(event)">
+      <div class="modal-content glass-panel" style="max-width: 380px;" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeAdminLoginModal(null)"><i class="fa-solid fa-xmark"></i></button>
+        <h3>ĐĂNG NHẬP QUẢN TRỊ</h3>
+        <p class="modal-subtitle">Nhập mật khẩu để truy cập trang quản lý</p>
+        
+        <div class="control-group" style="margin-bottom: 20px;">
+          <input type="password" id="admin-password-input" placeholder="Nhập mật khẩu (111996)..." style="width:100%; padding:12px; border-radius:8px; border:1px solid var(--border-glass); background:rgba(0,0,0,0.05); text-align:center; font-size:1.1rem; outline:none;" onkeyup="if(event.key === 'Enter') submitAdminPassword()">
+        </div>
+        <div id="login-error-msg" style="color:var(--danger-color); font-size:0.85rem; margin-top:-10px; margin-bottom:15px; display:none;">Mật khẩu không chính xác!</div>
+        <button class="btn btn-primary" style="width:100%;" onclick="submitAdminPassword()">Xác Nhận</button>
+      </div>
     </div>
   </div>
 

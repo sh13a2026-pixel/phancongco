@@ -472,12 +472,32 @@ body {
   max-width: 1000px;
 }
 
-/* Interactive Table Element */
+/* Interactive Table Element & Wrapper */
+.table-node-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-glass);
+  padding: 15px 10px;
+  border-radius: 16px;
+  box-shadow: var(--shadow-premium);
+  transition: var(--transition-smooth);
+}
+
+.table-node-wrapper:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold-main);
+  box-shadow: 0 8px 25px rgba(184, 134, 11, 0.12);
+}
+
 .table-node {
   background: var(--bg-secondary);
   border: 2px solid var(--border-glass);
   border-radius: 50%;
-  aspect-ratio: 1;
+  width: 90px;
+  height: 90px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -485,13 +505,55 @@ body {
   cursor: pointer;
   position: relative;
   transition: var(--transition-smooth);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
 }
 
 .table-node:hover {
-  transform: scale(1.08);
+  transform: scale(1.05);
   border-color: var(--gold-main);
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+  box-shadow: 0 0 15px rgba(184, 134, 11, 0.15);
+}
+
+.table-names-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.table-names-list .name-item {
+  font-size: 0.75rem;
+  padding: 3px 6px;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  color: var(--text-primary);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.table-names-list .name-item.empty {
+  color: var(--text-secondary);
+  opacity: 0.45;
+  font-style: italic;
+  font-size: 0.7rem;
+}
+
+.table-names-list .name-item.highlighted-name {
+  background: var(--gold-main);
+  color: white;
+  font-weight: bold;
+  border-color: var(--gold-dark);
+  box-shadow: 0 0 8px rgba(184, 134, 11, 0.3);
+  animation: pulse-name 1.5s infinite alternate;
+}
+
+@keyframes pulse-name {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.03); }
 }
 
 .table-node .table-num {
