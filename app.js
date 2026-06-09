@@ -116,9 +116,31 @@ async function initDefaultData() {
       });
       
       // Lắng nghe sự kiện thay đổi dữ liệu thời gian thực
-      firebaseDbRef.on('value', (snapshot) => {
+      firebaseDbRef.on('value', async (snapshot) => {
         const data = snapshot.val();
         if (data && Array.isArray(data) && data.length === 20) {
+          // Tự động nâng cấp dữ liệu nếu phát hiện bản cũ (mâm 16 ghế 1 vẫn là P. Tự Lạn)
+          const isOldData = data[15] && data[15].seats && data[15].seats[0] && data[15].seats[0].name === "P. Tự Lạn";
+          if (isOldData) {
+            console.log("Phát hiện dữ liệu cũ trên Firebase. Tự động đồng bộ từ data.json gốc...");
+            try {
+              const response = await fetch('data.json?t=' + new Date().getTime());
+              if (response.ok) {
+                const remoteData = await response.json();
+                if (Array.isArray(remoteData) && remoteData.length === 20) {
+                  seatingData = remoteData;
+                  localStorage.setItem('banquet_seating_data', JSON.stringify(seatingData));
+                  firebaseDbRef.set(seatingData);
+                  renderGuestLayout();
+                  updateStats();
+                  return;
+                }
+              }
+            } catch (err) {
+              console.error("Lỗi đồng bộ tự động:", err);
+            }
+          }
+
           seatingData = data;
           localStorage.setItem('banquet_seating_data', JSON.stringify(seatingData));
           
