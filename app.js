@@ -278,8 +278,35 @@ function updateLayoutCols() {
 
   if (isFirebaseActive && firebaseColsRef) {
     firebaseColsRef.set(layoutConfig).catch(err => {
-      console.error("Lỗi đồng bộ cấu hình cột lên Firebase:", err);
+      print(err); // Or console.error
     });
+  }
+}
+
+function isNamesDisplayEnabled() {
+  const checkbox = document.getElementById('toggle-names-checkbox');
+  if (checkbox) return checkbox.checked;
+  
+  const saved = localStorage.getItem('banquet_show_names');
+  if (saved !== null) return saved === 'true';
+  
+  return window.innerWidth > 768;
+}
+
+function toggleNamesDisplay(show) {
+  localStorage.setItem('banquet_show_names', show);
+  
+  document.querySelectorAll('.table-names-list').forEach(list => {
+    list.style.display = show ? 'flex' : 'none';
+  });
+
+  const checkbox = document.getElementById('toggle-names-checkbox');
+  if (checkbox) checkbox.checked = show;
+
+  if (selectedDelegate) {
+    setTimeout(() => {
+      drawRoutingPath(selectedDelegate.tableNumber);
+    }, 150);
   }
 }
 
@@ -339,6 +366,7 @@ function renderGuestLayout() {
     // Vẽ danh sách tên đại biểu hiển thị trực quan ngay dưới mâm cỗ
     const namesList = document.createElement('div');
     namesList.className = 'table-names-list';
+    namesList.style.display = isNamesDisplayEnabled() ? 'flex' : 'none';
 
     const occupiedSeats = table.seats.filter(s => s.name.trim() !== "");
     if (occupiedSeats.length > 0) {
@@ -433,6 +461,7 @@ function renderAdminTableList() {
     // Vẽ danh sách tên đại biểu hiển thị trực quan ngay dưới mâm cỗ
     const namesList = document.createElement('div');
     namesList.className = 'table-names-list';
+    namesList.style.display = isNamesDisplayEnabled() ? 'flex' : 'none';
 
     const occupiedSeats = table.seats.filter(s => s.name.trim() !== "");
     if (occupiedSeats.length > 0) {
@@ -1445,6 +1474,8 @@ function assignFromAdminPool(name) {
 // 8. ON APP LOAD
 window.addEventListener('DOMContentLoaded', async () => {
   await initDefaultData();
+  const checkbox = document.getElementById('toggle-names-checkbox');
+  if (checkbox) checkbox.checked = isNamesDisplayEnabled();
   renderGuestLayout();
   updatePoolUI();
   checkUrlParameters();

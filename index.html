@@ -95,10 +95,18 @@
         <div class="layout-section glass-panel">
           <div class="section-title">
             <h3><i class="fa-solid fa-map-location-dot"></i> ĐỊNH VỊ PHÒNG TIỆC</h3>
-            <div class="legend">
-              <span class="legend-item"><span class="color-dot available"></span> Còn trống</span>
-              <span class="legend-item"><span class="color-dot occupied"></span> Đã xếp</span>
-              <span class="legend-item"><span class="color-dot active-glow"></span> Ghế của bạn</span>
+            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+              <div class="legend">
+                <span class="legend-item"><span class="color-dot available"></span> Còn trống</span>
+                <span class="legend-item"><span class="color-dot occupied"></span> Đã xếp</span>
+                <span class="legend-item"><span class="color-dot active-glow"></span> Ghế của bạn</span>
+              </div>
+              <div class="toggle-container" style="font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 8px;">
+                <label style="cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 500; user-select: none;">
+                  <input type="checkbox" id="toggle-names-checkbox" onchange="toggleNamesDisplay(this.checked)" checked style="accent-color: var(--gold-main); cursor: pointer; width: 15px; height: 15px;">
+                  Hiện tên dưới mâm
+                </label>
+              </div>
             </div>
           </div>
           
