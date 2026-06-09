@@ -8,13 +8,14 @@ let selectedDelegate = null; // { name, tableIndex, seatIndex }
 // CẤU HÌNH KẾT NỐI REALTIME (FIREBASE)
 // Sau khi tạo dự án Firebase Realtime Database miễn phí, hãy dán cấu hình của bạn vào đây:
 const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "", // Điền đường dẫn Realtime Database, ví dụ: "https://ten-du-an-rtdb.firebaseio.com"
-  projectId: "",
-  storageBucket: "",
-  messagingSenderId: "",
-  appId: ""
+  apiKey: "AIzaSyC1hx8QBcXe1fjqAI2XAvsDwuY66ApYnBU",
+  authDomain: "letuyenthee1412026.firebaseapp.com",
+  databaseURL: "https://letuyenthee1412026-default-rtdb.asia-southeast1.firebasedatabase.app", // Mặc định Singapore. Nếu bạn chọn US hãy đổi thành: https://letuyenthee1412026-default-rtdb.firebaseio.com
+  projectId: "letuyenthee1412026",
+  storageBucket: "letuyenthee1412026.firebasestorage.app",
+  messagingSenderId: "974536000757",
+  appId: "1:974536000757:web:33ca407548b658a8b771bc",
+  measurementId: "G-8C607MWGFT"
 };
 
 let firebaseDbRef = null;
