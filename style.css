@@ -1194,6 +1194,21 @@ body {
 }
 
 @media (max-width: 480px) {
+  .app-container {
+    padding: 8px;
+  }
+  .glass-panel {
+    padding: 12px;
+    border-radius: 12px;
+  }
+  .hall-wrapper {
+    padding: 20px 8px;
+    border-radius: 10px;
+  }
+  .glass-header {
+    padding: 10px;
+    border-radius: 12px;
+  }
   .title-group .subtitle {
     font-size: 0.65rem;
     letter-spacing: 1px;
