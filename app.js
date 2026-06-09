@@ -331,14 +331,25 @@ function renderGuestLayout() {
     // Tạo mâm cỗ (Circle node)
     const tableNode = document.createElement('div');
     tableNode.className = 'table-node';
+    const isReserved = [16, 17, 19, 20].includes(table.tableNumber);
+    if (isReserved) {
+      tableNode.classList.add('reserved-table');
+    }
     tableNode.id = `table-${table.tableNumber}`;
     tableNode.onclick = () => openTableModal(tIndex);
 
     // Vẽ text mâm và số lượng
-    tableNode.innerHTML = `
-      <span class="table-num">Mâm ${table.tableNumber}</span>
-      <span class="table-count">${occupiedCount}/8</span>
-    `;
+    if (isReserved) {
+      tableNode.innerHTML = `
+        <span class="table-num">Mâm ${table.tableNumber}</span>
+        <span class="table-count" style="color: var(--accent-color); font-weight: 600; font-size: 0.65rem;">(Phục vụ)</span>
+      `;
+    } else {
+      tableNode.innerHTML = `
+        <span class="table-num">Mâm ${table.tableNumber}</span>
+        <span class="table-count">${occupiedCount}/8</span>
+      `;
+    }
 
     // Vẽ 8 ghế mini xung quanh mâm cỗ
     const seatsIndicator = document.createElement('div');
@@ -423,14 +434,25 @@ function renderAdminTableList() {
     // Tạo mâm cỗ (Circle node)
     const tableNode = document.createElement('div');
     tableNode.className = 'table-node';
+    const isReserved = [16, 17, 19, 20].includes(table.tableNumber);
+    if (isReserved) {
+      tableNode.classList.add('reserved-table');
+    }
     tableNode.id = `admin-table-${table.tableNumber}`;
     tableNode.onclick = () => openAdminEditModal(tIndex);
 
     // Vẽ text mâm và số lượng
-    tableNode.innerHTML = `
-      <span class="table-num">Mâm ${table.tableNumber}</span>
-      <span class="table-count">${occupiedCount}/8</span>
-    `;
+    if (isReserved) {
+      tableNode.innerHTML = `
+        <span class="table-num">Mâm ${table.tableNumber}</span>
+        <span class="table-count" style="color: var(--accent-color); font-weight: 600; font-size: 0.65rem;">(Phục vụ)</span>
+      `;
+    } else {
+      tableNode.innerHTML = `
+        <span class="table-num">Mâm ${table.tableNumber}</span>
+        <span class="table-count">${occupiedCount}/8</span>
+      `;
+    }
 
     // Vẽ 8 ghế mini xung quanh mâm cỗ
     const seatsIndicator = document.createElement('div');

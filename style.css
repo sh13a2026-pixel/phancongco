@@ -522,6 +522,15 @@ body {
   box-shadow: 0 4px 10px rgba(0,0,0,0.06);
 }
 
+.table-node.reserved-table {
+  border-color: rgba(179, 57, 57, 0.4);
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(179, 57, 57, 0.05) 100%);
+}
+
+.table-node.reserved-table .table-num {
+  color: var(--accent-color);
+}
+
 .table-node:hover {
   transform: scale(1.05);
   border-color: var(--gold-main);
