@@ -1,22 +1,742 @@
 [
-  {"tableNumber":1,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":2,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":3,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":4,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":5,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":6,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":7,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":8,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":9,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":10,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":11,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":12,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":13,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":14,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":15,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":16,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":17,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":18,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":19,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]},
-  {"tableNumber":20,"seats":[{"id":1,"name":""},{"id":2,"name":""},{"id":3,"name":""},{"id":4,"name":""},{"id":5,"name":""},{"id":6,"name":""},{"id":7,"name":""},{"id":8,"name":""}]}
+  {
+    "tableNumber": 1,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Đ/c Tuấn PTMT/e"
+      },
+      {
+        "id": 2,
+        "name": ""
+      },
+      {
+        "id": 3,
+        "name": "Đại biểu Xã Phù Lãng"
+      },
+      {
+        "id": 4,
+        "name": ""
+      },
+      {
+        "id": 5,
+        "name": "Đại biểu Xã Hợp Thịnh"
+      },
+      {
+        "id": 6,
+        "name": ""
+      },
+      {
+        "id": 7,
+        "name": "Đại biểu P. Quế Võ"
+      },
+      {
+        "id": 8,
+        "name": "Trưởng đoàn Xã Kha Sơn"
+      }
+    ]
+  },
+  {
+    "tableNumber": 2,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Đại biểu Xã Xuân Cẩm"
+      },
+      {
+        "id": 2,
+        "name": "Đ/c Dương CTV/d9"
+      },
+      {
+        "id": 3,
+        "name": "Đ/c Hoan TLHaC/BTM"
+      },
+      {
+        "id": 4,
+        "name": "Đại biểu P. Hạp Lĩnh"
+      },
+      {
+        "id": 5,
+        "name": "Đại biểu P. Bồng Lai"
+      },
+      {
+        "id": 6,
+        "name": ""
+      },
+      {
+        "id": 7,
+        "name": "Đại biểu P. Võ Cường"
+      },
+      {
+        "id": 8,
+        "name": "Đại biểu P. Kinh Bắc"
+      }
+    ]
+  },
+  {
+    "tableNumber": 3,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Đại biểu Xã Xuân Cẩm"
+      },
+      {
+        "id": 2,
+        "name": "Đ/c Thành CTV/d8"
+      },
+      {
+        "id": 3,
+        "name": "Đ/c Định TLCaB/BCT"
+      },
+      {
+        "id": 4,
+        "name": "Đại biểu Xã Hiệp Hòa"
+      },
+      {
+        "id": 5,
+        "name": "Đại biểu Xã Điểm Thụy"
+      },
+      {
+        "id": 6,
+        "name": "Đại biểu P. Đào Viên"
+      },
+      {
+        "id": 7,
+        "name": "Đại biểu P. Quế Võ"
+      },
+      {
+        "id": 8,
+        "name": "Nhà CS Xã Thành Công"
+      }
+    ]
+  },
+  {
+    "tableNumber": 4,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Đ/c Chanh PTMT/e"
+      },
+      {
+        "id": 2,
+        "name": "Đại biểu Xã Hiệp Hòa"
+      },
+      {
+        "id": 3,
+        "name": "Đ/c Khiển TLBVAN/BCT"
+      },
+      {
+        "id": 4,
+        "name": "Nhà CS Xã Điểm Thụy"
+      },
+      {
+        "id": 5,
+        "name": "Đại biểu Xã Phù Lãng"
+      },
+      {
+        "id": 6,
+        "name": "Đại biểu P. Bồng Lai"
+      },
+      {
+        "id": 7,
+        "name": "Đại biểu P. Đào Viên"
+      },
+      {
+        "id": 8,
+        "name": "Đại biểu P. Kinh Bắc"
+      }
+    ]
+  },
+  {
+    "tableNumber": 5,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Đ/c Hoàn TLTaH/BTM"
+      },
+      {
+        "id": 2,
+        "name": "Đ/c Hùng PeT"
+      },
+      {
+        "id": 3,
+        "name": "Trưởng đoàn P. Tự Lạn"
+      },
+      {
+        "id": 4,
+        "name": "Trưởng đoàn P. Trung Thành"
+      },
+      {
+        "id": 5,
+        "name": "Trưởng đoàn Xã Thành Công"
+      },
+      {
+        "id": 6,
+        "name": "Trưởng đoàn Xã Thành Công"
+      },
+      {
+        "id": 7,
+        "name": "Đại biểu P. Bắc Giang"
+      },
+      {
+        "id": 8,
+        "name": "Đại biểu P. Vân Hà"
+      }
+    ]
+  },
+  {
+    "tableNumber": 6,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Đ/c Thành PCU/e"
+      },
+      {
+        "id": 2,
+        "name": "Trưởng thôn Đông Thùy"
+      },
+      {
+        "id": 3,
+        "name": "Đại biểu THPT Đồng Bành"
+      },
+      {
+        "id": 4,
+        "name": ""
+      },
+      {
+        "id": 5,
+        "name": "Trưởng đoàn Xã Hiệp Hòa"
+      },
+      {
+        "id": 6,
+        "name": ""
+      },
+      {
+        "id": 7,
+        "name": "2// Hoàng Văn Lâm P'CHT/TMT/KVPT2"
+      },
+      {
+        "id": 8,
+        "name": "Trưởng đoàn Xã Điểm Thụy"
+      }
+    ]
+  },
+  {
+    "tableNumber": 7,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Đ/c Phục PCNUBKTĐU/e"
+      },
+      {
+        "id": 2,
+        "name": "Đại biểu Xã Điểm Thụy"
+      },
+      {
+        "id": 3,
+        "name": "Đại biểu P. Vạn Xuân"
+      },
+      {
+        "id": 4,
+        "name": "Nhà CS P. Trung Thành"
+      },
+      {
+        "id": 5,
+        "name": "Nhà CS P. Vạn Xuân"
+      },
+      {
+        "id": 6,
+        "name": "Đại biểu Xã Hợp Thịnh"
+      },
+      {
+        "id": 7,
+        "name": "Đại biểu P. Nam Sơn"
+      },
+      {
+        "id": 8,
+        "name": "Đại biểu P. Vân Hà"
+      }
+    ]
+  },
+  {
+    "tableNumber": 8,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Đ/c Minh eT"
+      },
+      {
+        "id": 2,
+        "name": "Đ/c Trung TMT/f"
+      },
+      {
+        "id": 3,
+        "name": "Trưởng đoàn Xã Phù Lãng"
+      },
+      {
+        "id": 4,
+        "name": "Trưởng đoàn THPT Đồng Bành"
+      },
+      {
+        "id": 5,
+        "name": "Trưởng đoàn P. Vạn Xuân"
+      },
+      {
+        "id": 6,
+        "name": "Trưởng đoàn Xã Xuân Cẩm"
+      },
+      {
+        "id": 7,
+        "name": "4// Ngô Chí Dũng CHT/KVPT3"
+      },
+      {
+        "id": 8,
+        "name": "Trưởng đoàn Xã Chi Lăng"
+      }
+    ]
+  },
+  {
+    "tableNumber": 9,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Đ/c Anh TMT/e"
+      },
+      {
+        "id": 2,
+        "name": "Công ty San Bằng"
+      },
+      {
+        "id": 3,
+        "name": "Trưởng đoàn P. Bắc Giang"
+      },
+      {
+        "id": 4,
+        "name": "Trưởng đoàn P. Nếnh"
+      },
+      {
+        "id": 5,
+        "name": "Đ/c Tài NVTC"
+      },
+      {
+        "id": 6,
+        "name": "Đại biểu Sư đoàn"
+      },
+      {
+        "id": 7,
+        "name": "3// Nguyễn Bá Tùng Phó CHT/KVPT4"
+      },
+      {
+        "id": 8,
+        "name": "Trưởng đoàn P. Vân Hà"
+      }
+    ]
+  },
+  {
+    "tableNumber": 10,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Đ/c Lin CTV/d7"
+      },
+      {
+        "id": 2,
+        "name": "Đ/c Toàn TLTaH/BTM"
+      },
+      {
+        "id": 3,
+        "name": "Nhà CS P. Bắc Giang"
+      },
+      {
+        "id": 4,
+        "name": "Nhà CS Xã Kha Sơn"
+      },
+      {
+        "id": 5,
+        "name": "Đại biểu Xã Kha Sơn"
+      },
+      {
+        "id": 6,
+        "name": "Đại biểu Xã Thành Công"
+      },
+      {
+        "id": 7,
+        "name": "Đại biểu P. Bắc Giang"
+      },
+      {
+        "id": 8,
+        "name": "Đại biểu P. Tự Lạn"
+      }
+    ]
+  },
+  {
+    "tableNumber": 11,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Đại biểu Sư đoàn"
+      },
+      {
+        "id": 2,
+        "name": "Đ/c Thông CNCT/e"
+      },
+      {
+        "id": 3,
+        "name": "Trưởng đoàn P. Đa Mai"
+      },
+      {
+        "id": 4,
+        "name": "Trưởng đoàn P. Kinh Bắc"
+      },
+      {
+        "id": 5,
+        "name": "Trưởng đoàn P. Quế Võ"
+      },
+      {
+        "id": 6,
+        "name": ""
+      },
+      {
+        "id": 7,
+        "name": "Đ/c Hải TLTC/BTM"
+      },
+      {
+        "id": 8,
+        "name": "Trưởng đoàn P. Võ Cường"
+      }
+    ]
+  },
+  {
+    "tableNumber": 12,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Đ/c Nam dT/d8"
+      },
+      {
+        "id": 2,
+        "name": "Đ/c Khương PCNCT/e"
+      },
+      {
+        "id": 3,
+        "name": "Trưởng đoàn P. Bồng Lai"
+      },
+      {
+        "id": 4,
+        "name": "Trưởng đoàn Xã Hợp Thịnh"
+      },
+      {
+        "id": 5,
+        "name": "Trưởng đoàn P. Hạp Lĩnh"
+      },
+      {
+        "id": 6,
+        "name": "Đại biểu Sư đoàn"
+      },
+      {
+        "id": 7,
+        "name": "Đại biểu P. Nếnh"
+      },
+      {
+        "id": 8,
+        "name": "Trưởng đoàn Xã Tân Thành"
+      }
+    ]
+  },
+  {
+    "tableNumber": 13,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Đại biểu P. Đa Mai"
+      },
+      {
+        "id": 2,
+        "name": "Đ/c Hiệu PCNHC -KT/e"
+      },
+      {
+        "id": 3,
+        "name": "Đ/c Cường TLDV/BCT"
+      },
+      {
+        "id": 4,
+        "name": "Đại biểu P. Phúc Thuận"
+      },
+      {
+        "id": 5,
+        "name": "Nhà CS P. Võ Cường"
+      },
+      {
+        "id": 6,
+        "name": "Đại biểu P. Nam Sơn"
+      },
+      {
+        "id": 7,
+        "name": "Đại biểu P. Võ Cường"
+      },
+      {
+        "id": 8,
+        "name": "Đại biểu P. Nếnh"
+      }
+    ]
+  },
+  {
+    "tableNumber": 14,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Đại biểu Sư đoàn"
+      },
+      {
+        "id": 2,
+        "name": "Đ/c Được CNHC -KT/e"
+      },
+      {
+        "id": 3,
+        "name": "Đại biểu P. Phúc Thuận"
+      },
+      {
+        "id": 4,
+        "name": "Trưởng đoàn P. Nam Sơn"
+      },
+      {
+        "id": 5,
+        "name": "Trưởng đoàn P. Đào Viên"
+      },
+      {
+        "id": 6,
+        "name": "Đại biểu P. Đa Mai"
+      },
+      {
+        "id": 7,
+        "name": "Đại biểu P. Tự Lạn"
+      },
+      {
+        "id": 8,
+        "name": "Đ/c Trọng dT/d7"
+      }
+    ]
+  },
+  {
+    "tableNumber": 15,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Nhà CS P. Đa Mai"
+      },
+      {
+        "id": 2,
+        "name": "Đ/c Tuấn PdT/d9"
+      },
+      {
+        "id": 3,
+        "name": "Nhà CS Xã Hiệp Hòa"
+      },
+      {
+        "id": 4,
+        "name": "Nhà CS Xã Xuân Cẩm"
+      },
+      {
+        "id": 5,
+        "name": "Đại biểu P. Phúc Thuận"
+      },
+      {
+        "id": 6,
+        "name": "Đại biểu Xã Kha Sơn"
+      },
+      {
+        "id": 7,
+        "name": "Đại biểu P. Vạn Xuân"
+      },
+      {
+        "id": 8,
+        "name": "Đại biểu P. Hạp Lĩnh"
+      }
+    ]
+  },
+  {
+    "tableNumber": 16,
+    "seats": [
+      {
+        "id": 1,
+        "name": "P. Tự Lạn"
+      },
+      {
+        "id": 2,
+        "name": "Xã Xuân Cẩm"
+      },
+      {
+        "id": 3,
+        "name": "P. Vân Hà"
+      },
+      {
+        "id": 4,
+        "name": "P. Nếnh"
+      },
+      {
+        "id": 5,
+        "name": "P. Quế Võ"
+      },
+      {
+        "id": 6,
+        "name": "(Lái xe)"
+      },
+      {
+        "id": 7,
+        "name": "P. Võ Cường"
+      },
+      {
+        "id": 8,
+        "name": "P. Bắc Giang"
+      }
+    ]
+  },
+  {
+    "tableNumber": 17,
+    "seats": [
+      {
+        "id": 1,
+        "name": "P. Đào Viên"
+      },
+      {
+        "id": 2,
+        "name": "P. Kinh Bắc"
+      },
+      {
+        "id": 3,
+        "name": "P. Bồng Lai"
+      },
+      {
+        "id": 4,
+        "name": "Xã Hợp Thịnh"
+      },
+      {
+        "id": 5,
+        "name": "P. Hạp Lĩnh"
+      },
+      {
+        "id": 6,
+        "name": "(Lái xe)"
+      },
+      {
+        "id": 7,
+        "name": "Xã Phù Lãng"
+      },
+      {
+        "id": 8,
+        "name": "P. Đa Mai"
+      }
+    ]
+  },
+  {
+    "tableNumber": 18,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Nhà CS P. Tự Lạn"
+      },
+      {
+        "id": 2,
+        "name": "Nhà CS P. Nếnh"
+      },
+      {
+        "id": 3,
+        "name": "Đ/c Nguyên TLTuH/BCT"
+      },
+      {
+        "id": 4,
+        "name": "Nhà CS P. Vân Hà"
+      },
+      {
+        "id": 5,
+        "name": "Nhà CS P. Bồng Lai"
+      },
+      {
+        "id": 6,
+        "name": "Nhà CS P. Quế Võ"
+      },
+      {
+        "id": 7,
+        "name": "Nhà CS P. Kinh Bắc"
+      },
+      {
+        "id": 8,
+        "name": "Nhà CS P. Đào Viên"
+      }
+    ]
+  },
+  {
+    "tableNumber": 19,
+    "seats": [
+      {
+        "id": 1,
+        "name": "P. Phúc Thuận"
+      },
+      {
+        "id": 2,
+        "name": "Xã Điểm Thụy"
+      },
+      {
+        "id": 3,
+        "name": "Xã Kha Sơn"
+      },
+      {
+        "id": 4,
+        "name": "Xã Thành Công"
+      },
+      {
+        "id": 5,
+        "name": "KVPT 3. BN"
+      },
+      {
+        "id": 6,
+        "name": "(Lái xe)"
+      },
+      {
+        "id": 7,
+        "name": "KVPT 2. BN"
+      },
+      {
+        "id": 8,
+        "name": "P. Trung Thành"
+      }
+    ]
+  },
+  {
+    "tableNumber": 20,
+    "seats": [
+      {
+        "id": 1,
+        "name": "Sư đoàn"
+      },
+      {
+        "id": 2,
+        "name": "KVPT 4. BN"
+      },
+      {
+        "id": 3,
+        "name": "Sư đoàn"
+      },
+      {
+        "id": 4,
+        "name": "Xã Tân Thành"
+      },
+      {
+        "id": 5,
+        "name": "(Lái xe)"
+      },
+      {
+        "id": 6,
+        "name": "Xã Chi Lăng"
+      },
+      {
+        "id": 7,
+        "name": "Xã Tân Thành"
+      },
+      {
+        "id": 8,
+        "name": "Xã Chi Lăng"
+      }
+    ]
+  }
 ]
