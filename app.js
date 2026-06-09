@@ -315,7 +315,18 @@ function renderGuestLayout() {
   const container = document.getElementById('tables-container');
   container.innerHTML = "";
 
-  seatingData.forEach((table, tIndex) => {
+  const layoutMap = [3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, null];
+  layoutMap.forEach(tableNum => {
+    if (tableNum === null) {
+      const spacer = document.createElement('div');
+      spacer.className = 'table-node-placeholder';
+      container.appendChild(spacer);
+      return;
+    }
+
+    const tIndex = seatingData.findIndex(t => t.tableNumber === tableNum);
+    if (tIndex === -1) return;
+    const table = seatingData[tIndex];
     const occupiedCount = table.seats.filter(s => s.name.trim() !== "").length;
     
     // Tạo phần tử bọc ngoài (Wrapper)
@@ -396,7 +407,18 @@ function renderAdminTableList() {
   const container = document.getElementById('admin-tables-container');
   container.innerHTML = "";
 
-  seatingData.forEach((table, tIndex) => {
+  const layoutMap = [3, 2, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, null];
+  layoutMap.forEach(tableNum => {
+    if (tableNum === null) {
+      const spacer = document.createElement('div');
+      spacer.className = 'table-node-placeholder';
+      container.appendChild(spacer);
+      return;
+    }
+
+    const tIndex = seatingData.findIndex(t => t.tableNumber === tableNum);
+    if (tIndex === -1) return;
+    const table = seatingData[tIndex];
     const occupiedCount = table.seats.filter(s => s.name.trim() !== "").length;
     
     // Tạo phần tử bọc ngoài (Wrapper)

@@ -487,6 +487,14 @@ body {
   border-radius: 16px;
   box-shadow: var(--shadow-premium);
   transition: var(--transition-smooth);
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.table-node-placeholder {
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .table-node-wrapper:hover {
@@ -1176,7 +1184,7 @@ body {
   }
 
   .tables-grid {
-    grid-template-columns: repeat(var(--cols-mobile, 3), 1fr);
+    grid-template-columns: repeat(var(--cols-mobile, 3), minmax(0, 1fr));
   }
   
   .admin-seats-grid {
@@ -1216,7 +1224,7 @@ body {
   }
 
   .tables-grid {
-    grid-template-columns: repeat(var(--cols-mobile, 3), 1fr);
+    grid-template-columns: repeat(var(--cols-mobile, 3), minmax(0, 1fr));
     gap: 8px;
   }
   
