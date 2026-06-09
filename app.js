@@ -6,6 +6,8 @@ let appBaseUrl = "";
 let selectedDelegate = null; // { name, tableIndex, seatIndex }
 let layoutConfig = { colsPc: 4, colsMobile: 2 };
 let firebaseColsRef = null;
+let unassignedDelegates = []; // Array of names: ["Nguyễn Văn A", "Trần Thị B"]
+let firebasePoolRef = null;
 
 // CẤU HÌNH KẾT NỐI REALTIME (FIREBASE)
 // Sau khi tạo dự án Firebase Realtime Database miễn phí, hãy dán cấu hình của bạn vào đây:
@@ -77,15 +79,38 @@ async function initDefaultData() {
   }
   applyLayoutCols(layoutConfig.colsPc, layoutConfig.colsMobile);
 
+  // Load unassigned delegates pool từ localStorage trước
+  const localPool = localStorage.getItem('banquet_unassigned_pool');
+  if (localPool) {
+    try {
+      unassignedDelegates = JSON.parse(localPool);
+    } catch (e) {
+      unassignedDelegates = [];
+    }
+  }
+
   // Kích hoạt kết nối Firebase Realtime nếu được cấu hình
   if (firebaseConfig.databaseURL && typeof firebase !== 'undefined') {
     try {
       firebase.initializeApp(firebaseConfig);
       firebaseDbRef = firebase.database().ref('seating_data');
       firebaseColsRef = firebase.database().ref('layout_config');
+      firebasePoolRef = firebase.database().ref('unassigned_delegates');
       isFirebaseActive = true;
       console.log("Đã kết nối thành công tới Firebase Realtime Database.");
       
+      // Lắng nghe danh sách chờ thời gian thực
+      firebasePoolRef.on('value', (snapshot) => {
+        const val = snapshot.val();
+        if (val && Array.isArray(val)) {
+          unassignedDelegates = val;
+        } else {
+          unassignedDelegates = [];
+        }
+        localStorage.setItem('banquet_unassigned_pool', JSON.stringify(unassignedDelegates));
+        updatePoolUI();
+      });
+
       // Lắng nghe cấu hình cột thời gian thực
       firebaseColsRef.on('value', (snapshot) => {
         const val = snapshot.val();
@@ -373,6 +398,9 @@ function renderAdminTableList() {
       input.value = seat.name;
       input.placeholder = `Ghế ${seat.id}...`;
       input.oninput = (e) => updateSeatName(tIndex, sIndex, e.target.value);
+      input.onfocus = () => showPoolDropdown(input, tIndex, sIndex);
+      input.onblur = () => setTimeout(() => hidePoolDropdown(tIndex, sIndex), 250);
+      input.onkeyup = (e) => filterPoolDropdown(e.target.value, tIndex, sIndex);
 
       // Mini actions for individual seats (like QR generator for seat)
       const qrBtn = document.createElement('button');
@@ -397,6 +425,31 @@ function renderAdminTableList() {
 }
 
 function updateSeatName(tIndex, sIndex, name) {
+  const oldName = seatingData[tIndex].seats[sIndex].name.trim();
+  const newName = name.trim();
+
+  // Nếu tên cũ không trống và thay đổi, đưa tên cũ về bể chờ xếp chỗ
+  if (oldName !== "" && oldName !== newName) {
+    if (!unassignedDelegates.includes(oldName)) {
+      unassignedDelegates.push(oldName);
+      localStorage.setItem('banquet_unassigned_pool', JSON.stringify(unassignedDelegates));
+      if (isFirebaseActive && firebasePoolRef) {
+        firebasePoolRef.set(unassignedDelegates);
+      }
+      updatePoolUI();
+    }
+  }
+
+  // Nếu gõ tay trùng với tên có sẵn trong bể chờ xếp chỗ, xóa tên đó khỏi bể
+  if (newName !== "" && unassignedDelegates.includes(newName)) {
+    unassignedDelegates = unassignedDelegates.filter(n => n !== newName);
+    localStorage.setItem('banquet_unassigned_pool', JSON.stringify(unassignedDelegates));
+    if (isFirebaseActive && firebasePoolRef) {
+      firebasePoolRef.set(unassignedDelegates);
+    }
+    updatePoolUI();
+  }
+
   seatingData[tIndex].seats[sIndex].name = name;
   saveToLocalStorage();
   // Live render guest view in background
@@ -1014,9 +1067,132 @@ function closeAdminLoginModal(e) {
   }
 }
 
+// 9. UNASSIGNED DELEGATE POOL FUNCTIONS
+function updatePoolUI() {
+  const textarea = document.getElementById('pool-names-input');
+  const countSpan = document.getElementById('pool-count');
+  if (countSpan) {
+    countSpan.textContent = unassignedDelegates.length;
+  }
+  if (textarea && document.activeElement !== textarea) {
+    textarea.value = unassignedDelegates.join('\n');
+  }
+}
+
+function saveDelegatePool() {
+  const textarea = document.getElementById('pool-names-input');
+  if (!textarea) return;
+
+  const names = textarea.value.split('\n')
+                              .map(name => name.trim())
+                              .filter(name => name.length > 0);
+
+  unassignedDelegates = names;
+  localStorage.setItem('banquet_unassigned_pool', JSON.stringify(unassignedDelegates));
+
+  if (isFirebaseActive && firebasePoolRef) {
+    firebasePoolRef.set(unassignedDelegates)
+      .then(() => {
+        alert("Đã lưu và đồng bộ danh sách chờ lên mạng!");
+      })
+      .catch(err => {
+        console.error("Lỗi đồng bộ danh sách chờ:", err);
+        alert("Lỗi kết nối Firebase khi đồng bộ danh sách chờ.");
+      });
+  } else {
+    alert("Đã lưu danh sách chờ cục bộ thiết bị.");
+  }
+  updatePoolUI();
+}
+
+function showPoolDropdown(input, tIndex, sIndex) {
+  document.querySelectorAll('.pool-dropdown').forEach(d => d.style.display = 'none');
+
+  const seatBox = input.parentNode;
+  let dropdown = seatBox.querySelector('.pool-dropdown');
+  if (!dropdown) {
+    dropdown = document.createElement('div');
+    dropdown.className = 'pool-dropdown';
+    dropdown.id = `pool-dropdown-${tIndex}-${sIndex}`;
+    seatBox.appendChild(dropdown);
+  }
+
+  renderPoolDropdownItems(dropdown, input.value, tIndex, sIndex);
+  dropdown.style.display = 'block';
+}
+
+function hidePoolDropdown(tIndex, sIndex) {
+  const dropdown = document.getElementById(`pool-dropdown-${tIndex}-${sIndex}`);
+  if (dropdown) {
+    dropdown.style.display = 'none';
+  }
+}
+
+function filterPoolDropdown(val, tIndex, sIndex) {
+  const dropdown = document.getElementById(`pool-dropdown-${tIndex}-${sIndex}`);
+  if (dropdown) {
+    renderPoolDropdownItems(dropdown, val, tIndex, sIndex);
+  }
+}
+
+function renderPoolDropdownItems(dropdown, filterVal, tIndex, sIndex) {
+  dropdown.innerHTML = "";
+  const query = removeVietnameseTones(filterVal);
+
+  const filtered = unassignedDelegates.filter(name => {
+    if (!query) return true;
+    return removeVietnameseTones(name).includes(query);
+  });
+
+  if (filtered.length === 0) {
+    dropdown.innerHTML = `<div class="pool-dropdown-item no-match">Không có ai trong danh sách chờ</div>`;
+    return;
+  }
+
+  filtered.forEach(name => {
+    const item = document.createElement('div');
+    item.className = 'pool-dropdown-item';
+    item.textContent = name;
+    item.onmousedown = (e) => {
+      e.preventDefault();
+      assignFromPool(name, tIndex, sIndex);
+    };
+    dropdown.appendChild(item);
+  });
+}
+
+function assignFromPool(name, tIndex, sIndex) {
+  const oldName = seatingData[tIndex].seats[sIndex].name.trim();
+
+  // Xóa tên vừa chọn khỏi bể chờ
+  unassignedDelegates = unassignedDelegates.filter(n => n !== name);
+
+  // Đưa tên cũ ở ghế này trở lại bể chờ (nếu có)
+  if (oldName !== "") {
+    unassignedDelegates.push(oldName);
+  }
+
+  // Cập nhật ghế
+  seatingData[tIndex].seats[sIndex].name = name;
+
+  localStorage.setItem('banquet_seating_data', JSON.stringify(seatingData));
+  localStorage.setItem('banquet_unassigned_pool', JSON.stringify(unassignedDelegates));
+
+  if (isFirebaseActive) {
+    if (firebaseDbRef) firebaseDbRef.set(seatingData);
+    if (firebasePoolRef) firebasePoolRef.set(unassignedDelegates);
+  }
+
+  renderGuestLayout();
+  renderAdminTableList();
+  updateStats();
+  updatePoolUI();
+}
+
 // 8. ON APP LOAD
 window.addEventListener('DOMContentLoaded', async () => {
   await initDefaultData();
   renderGuestLayout();
+  updatePoolUI();
   checkUrlParameters();
 });

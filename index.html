@@ -191,6 +191,19 @@
               </button>
             </div>
 
+            <!-- Danh Sách Chờ Xếp Chỗ (Pool) -->
+            <div class="control-group list-import-area" style="border-top: 1px solid var(--border-glass); padding-top: 15px; margin-top: 15px;">
+              <h4><i class="fa-solid fa-clipboard-list"></i> Danh Sách Chờ Xếp Chỗ</h4>
+              <p class="help-text">Nhập danh sách đại biểu (mỗi dòng một tên) để lưu vào bể đại biểu chung. Các quản trị viên khác có thể click vào ghế để chọn nhanh từ danh sách này.</p>
+              <textarea id="pool-names-input" rows="6" placeholder="Nguyễn Văn A&#10;Trần Thị B..."></textarea>
+              <button class="btn btn-accent" onclick="saveDelegatePool()" style="background: linear-gradient(135deg, var(--gold-main) 0%, var(--gold-dark) 100%); color: black; margin-top: 8px;">
+                <i class="fa-solid fa-floppy-disk"></i> Lưu & Đồng Bộ Danh Sách Chờ
+              </button>
+              <div style="margin-top: 10px; font-size: 0.85rem;">
+                Chưa xếp: <span id="pool-count" style="font-weight: bold; color: var(--gold-main);">0</span> người
+              </div>
+            </div>
+
             <!-- Import excel/list -->
             <div class="control-group list-import-area">
               <h4><i class="fa-solid fa-users-line"></i> Nhập Danh Sách Nhanh</h4>
