@@ -1,4 +1,4 @@
-const CACHE_NAME = 'banquet-seating-v1';
+const CACHE_NAME = 'banquet-seating-v2';
 const ASSETS = [
   './',
   './index.html',
@@ -34,6 +34,12 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
+  // Bỏ qua bộ nhớ đệm đối với các yêu cầu lấy dữ liệu động (Firebase, data.json)
+  if (e.request.url.includes('data.json') || e.request.url.includes('firebase')) {
+    e.respondWith(fetch(e.request));
+    return;
+  }
+  
   e.respondWith(
     caches.match(e.request).then((cachedResponse) => {
       if (cachedResponse) {
