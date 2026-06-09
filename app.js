@@ -119,9 +119,23 @@ async function initDefaultData() {
       firebaseDbRef.on('value', async (snapshot) => {
         const data = snapshot.val();
         
-        // Nếu database trống hoặc lỗi, tự động nạp dữ liệu từ data.json gốc
-        if (!data || !Array.isArray(data) || data.length !== 20) {
-          console.log("Cơ sở dữ liệu Firebase trống hoặc lỗi. Tự động khởi tạo từ data.json...");
+        // Tính số lượng đại biểu đã được xếp trên Firebase
+        let firebaseAssignedCount = 0;
+        if (data && Array.isArray(data)) {
+          data.forEach(t => {
+            if (t && t.seats) {
+              t.seats.forEach(s => {
+                if (s && s.name && s.name.trim() !== "") {
+                  firebaseAssignedCount++;
+                }
+              });
+            }
+          });
+        }
+        
+        // Nếu database trống, lỗi, hoặc chưa có đại biểu nào được xếp (0 đại biểu)
+        if (!data || !Array.isArray(data) || data.length !== 20 || firebaseAssignedCount === 0) {
+          console.log("Cơ sở dữ liệu Firebase trống hoặc chưa có dữ liệu đại biểu. Tự động khởi tạo từ data.json...");
           try {
             const response = await fetch('data.json?t=' + new Date().getTime());
             if (response.ok) {
@@ -135,7 +149,7 @@ async function initDefaultData() {
               }
             }
           } catch (err) {
-            console.error("Lỗi tự động khởi tạo dữ liệu Firebase:", err);
+            console.error("Lỗi tự động khởi tạo dữ liệu Firebase từ data.json:", err);
           }
           return;
         }
