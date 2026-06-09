@@ -1123,6 +1123,8 @@ body {
   margin-top: 25px;
   z-index: 5;
   transition: var(--transition-smooth);
+  align-self: flex-end;
+  margin-right: 5%;
 }
 
 .entrance i {

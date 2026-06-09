@@ -161,23 +161,18 @@
               <div style="display: flex; gap: 10px; margin-top: 5px;">
                 <div style="flex: 1;">
                   <label for="cols-pc-select" style="font-size: 0.8rem; margin-bottom: 4px; display: block;">Máy tính (PC):</label>
-                  <select id="cols-pc-select" onchange="updateLayoutCols()" style="width: 100%; padding: 8px; border-radius: 8px; border: 1.5px solid var(--border-glass); background: var(--bg-secondary); color: var(--text-primary); font-family: var(--font-sans); outline: none;">
-                    <option value="1">1 cột</option>
-                    <option value="2">2 cột</option>
-                    <option value="3">3 cột</option>
-                    <option value="4" selected>4 cột</option>
+                  <select id="cols-pc-select" disabled style="width: 100%; padding: 8px; border-radius: 8px; border: 1.5px solid var(--border-glass); background: var(--bg-secondary); color: var(--text-primary); font-family: var(--font-sans); outline: none; opacity: 0.7; cursor: not-allowed;">
+                    <option value="3" selected>3 cột (Cố định)</option>
                   </select>
                 </div>
                 <div style="flex: 1;">
                   <label for="cols-mobile-select" style="font-size: 0.8rem; margin-bottom: 4px; display: block;">Điện thoại:</label>
-                  <select id="cols-mobile-select" onchange="updateLayoutCols()" style="width: 100%; padding: 8px; border-radius: 8px; border: 1.5px solid var(--border-glass); background: var(--bg-secondary); color: var(--text-primary); font-family: var(--font-sans); outline: none;">
-                    <option value="1">1 cột</option>
-                    <option value="2">2 cột</option>
-                    <option value="3" selected>3 cột</option>
-                    <option value="4">4 cột</option>
+                  <select id="cols-mobile-select" disabled style="width: 100%; padding: 8px; border-radius: 8px; border: 1.5px solid var(--border-glass); background: var(--bg-secondary); color: var(--text-primary); font-family: var(--font-sans); outline: none; opacity: 0.7; cursor: not-allowed;">
+                    <option value="3" selected>3 cột (Cố định)</option>
                   </select>
                 </div>
               </div>
+              <small class="help-text" style="color: var(--gold-main); font-weight: 500; margin-top: 4px;">* Số cột cố định ở mức 3 để đảm bảo chính xác vị trí các mâm so với sơ đồ PDF gốc.</small>
             </div>
 
             <div class="action-buttons-group">

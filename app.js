@@ -4,7 +4,7 @@
 let seatingData = []; // Array of 20 tables, each having an array of 8 seat objects: { id: 1..8, name: "" }
 let appBaseUrl = "";
 let selectedDelegate = null; // { name, tableIndex, seatIndex }
-let layoutConfig = { colsPc: 4, colsMobile: 3 };
+let layoutConfig = { colsPc: 3, colsMobile: 3 };
 let firebaseColsRef = null;
 let unassignedDelegates = []; // Array of names: ["Nguyễn Văn A", "Trần Thị B"]
 let firebasePoolRef = null;
@@ -68,16 +68,9 @@ function removeVietnameseTones(str) {
 
 // Initialize default data (Tải đồng bộ từ data.json nếu có, nếu không dùng localStorage)
 async function initDefaultData() {
-  // Load layout config từ localStorage trước
-  const localLayout = localStorage.getItem('banquet_layout_config');
-  if (localLayout) {
-    try {
-      layoutConfig = JSON.parse(localLayout);
-    } catch (e) {
-      layoutConfig = { colsPc: 4, colsMobile: 2 };
-    }
-  }
-  applyLayoutCols(layoutConfig.colsPc, layoutConfig.colsMobile);
+  // Bắt buộc sử dụng cấu hình 3 cột để khớp hoàn toàn với sơ đồ mâm cỗ dạng cột trong PDF
+  layoutConfig = { colsPc: 3, colsMobile: 3 };
+  applyLayoutCols(3, 3);
 
   // Load unassigned delegates pool từ localStorage trước
   const localPool = localStorage.getItem('banquet_unassigned_pool');
@@ -114,11 +107,12 @@ async function initDefaultData() {
       // Lắng nghe cấu hình cột thời gian thực
       firebaseColsRef.on('value', (snapshot) => {
         const val = snapshot.val();
-        if (val && val.colsPc && val.colsMobile) {
-          layoutConfig = val;
-          localStorage.setItem('banquet_layout_config', JSON.stringify(layoutConfig));
-          applyLayoutCols(layoutConfig.colsPc, layoutConfig.colsMobile);
+        if (val && (val.colsPc !== 3 || val.colsMobile !== 3)) {
+          firebaseColsRef.set({ colsPc: 3, colsMobile: 3 });
         }
+        layoutConfig = { colsPc: 3, colsMobile: 3 };
+        localStorage.setItem('banquet_layout_config', JSON.stringify(layoutConfig));
+        applyLayoutCols(3, 3);
       });
       
       // Lắng nghe sự kiện thay đổi dữ liệu thời gian thực
