@@ -4,27 +4,27 @@
     "seats": [
       {
         "id": 1,
-        "name": "Đ/c Tuấn PTMT/e"
+        "name": ""
       },
       {
         "id": 2,
-        "name": ""
+        "name": "Đ/c Tuấn PTMT/e"
       },
       {
         "id": 3,
-        "name": "Đại biểu Xã Phù Lãng"
+        "name": ""
       },
       {
         "id": 4,
-        "name": ""
+        "name": "Đại biểu Xã Phù Lãng"
       },
       {
         "id": 5,
-        "name": "Đại biểu Xã Hợp Thịnh"
+        "name": ""
       },
       {
         "id": 6,
-        "name": ""
+        "name": "Đại biểu Xã Hợp Thịnh"
       },
       {
         "id": 7,
@@ -53,15 +53,15 @@
       },
       {
         "id": 4,
-        "name": "Đại biểu P. Hạp Lĩnh"
+        "name": ""
       },
       {
         "id": 5,
-        "name": "Đại biểu P. Bồng Lai"
+        "name": "Đại biểu P. Hạp Lĩnh"
       },
       {
         "id": 6,
-        "name": ""
+        "name": "Đại biểu P. Bồng Lai"
       },
       {
         "id": 7,
@@ -94,7 +94,7 @@
       },
       {
         "id": 5,
-        "name": "Đại biểu Xã Điểm Thụy"
+        "name": "Đại biểu Xã Điềm Thụy"
       },
       {
         "id": 6,
@@ -127,7 +127,7 @@
       },
       {
         "id": 4,
-        "name": "Nhà CS Xã Điểm Thụy"
+        "name": "Nhà CS Xã Điềm Thụy"
       },
       {
         "id": 5,
@@ -197,19 +197,19 @@
       },
       {
         "id": 3,
-        "name": "Đại biểu THPT Đồng Bành"
+        "name": ""
       },
       {
         "id": 4,
-        "name": ""
+        "name": "Đại biểu THPT Đồng Bành"
       },
       {
         "id": 5,
-        "name": "Trưởng đoàn Xã Hiệp Hòa"
+        "name": ""
       },
       {
         "id": 6,
-        "name": ""
+        "name": "Trưởng đoàn Xã Hiệp Hòa"
       },
       {
         "id": 7,
@@ -217,7 +217,7 @@
       },
       {
         "id": 8,
-        "name": "Trưởng đoàn Xã Điểm Thụy"
+        "name": "Trưởng đoàn Xã Điềm Thụy"
       }
     ]
   },
@@ -226,11 +226,11 @@
     "seats": [
       {
         "id": 1,
-        "name": "Đ/c Phục PCNUBKTĐU/e"
+        "name": "Đ/c Phúc PCNUBKTĐU/e"
       },
       {
         "id": 2,
-        "name": "Đại biểu Xã Điểm Thụy"
+        "name": "Đại biểu Xã Điềm Thụy"
       },
       {
         "id": 3,
@@ -337,11 +337,11 @@
     "seats": [
       {
         "id": 1,
-        "name": "Đ/c Lin CTV/d7"
+        "name": "Đ/c Toàn TLTaH/BTM"
       },
       {
         "id": 2,
-        "name": "Đ/c Toàn TLTaH/BTM"
+        "name": "Đ/c Lin CTV/d7"
       },
       {
         "id": 3,
@@ -386,15 +386,15 @@
       },
       {
         "id": 4,
-        "name": "Trưởng đoàn P. Kinh Bắc"
+        "name": ""
       },
       {
         "id": 5,
-        "name": "Trưởng đoàn P. Quế Võ"
+        "name": "Trưởng đoàn P. Kinh Bắc"
       },
       {
         "id": 6,
-        "name": ""
+        "name": "Trưởng đoàn P. Quế Võ"
       },
       {
         "id": 7,
@@ -448,11 +448,11 @@
     "seats": [
       {
         "id": 1,
-        "name": "Đại biểu P. Đa Mai"
+        "name": "Đ/c Hiệu PCNHC-KT/e"
       },
       {
         "id": 2,
-        "name": "Đ/c Hiệu PCNHC -KT/e"
+        "name": "Đại biểu P. Đa Mai"
       },
       {
         "id": 3,
@@ -489,7 +489,7 @@
       },
       {
         "id": 2,
-        "name": "Đ/c Được CNHC -KT/e"
+        "name": "Đ/c Được CNHC-KT/e"
       },
       {
         "id": 3,
@@ -559,35 +559,35 @@
     "seats": [
       {
         "id": 1,
-        "name": "P. Tự Lạn"
+        "name": "Lái xe Xã Xuân Cẩm"
       },
       {
         "id": 2,
-        "name": "Xã Xuân Cẩm"
+        "name": "Lái xe Xã Hiệp Hòa"
       },
       {
         "id": 3,
-        "name": "P. Vân Hà"
+        "name": "Lái xe P. Vân Hà"
       },
       {
         "id": 4,
-        "name": "P. Nếnh"
+        "name": "Lái xe P. Nếnh"
       },
       {
         "id": 5,
-        "name": "P. Quế Võ"
+        "name": "Lái xe P. Quế Võ"
       },
       {
         "id": 6,
-        "name": "(Lái xe)"
+        "name": "Lái xe P. Võ Cường"
       },
       {
         "id": 7,
-        "name": "P. Võ Cường"
+        "name": "Lái xe P. Bắc Giang"
       },
       {
         "id": 8,
-        "name": "P. Bắc Giang"
+        "name": "Lái xe P. Tự Lạn"
       }
     ]
   },
@@ -596,35 +596,35 @@
     "seats": [
       {
         "id": 1,
-        "name": "P. Đào Viên"
+        "name": "Lái xe P. Kinh Bắc"
       },
       {
         "id": 2,
-        "name": "P. Kinh Bắc"
+        "name": "Lái xe P. Nam Sơn"
       },
       {
         "id": 3,
-        "name": "P. Bồng Lai"
+        "name": "Lái xe P. Bồng Lai"
       },
       {
         "id": 4,
-        "name": "Xã Hợp Thịnh"
+        "name": "Lái xe Xã Hợp Thịnh"
       },
       {
         "id": 5,
-        "name": "P. Hạp Lĩnh"
+        "name": "Lái xe P. Hạp Lĩnh"
       },
       {
         "id": 6,
-        "name": "(Lái xe)"
+        "name": "Lái xe Xã Phù Lãng"
       },
       {
         "id": 7,
-        "name": "Xã Phù Lãng"
+        "name": "Lái xe P. Đa Mai"
       },
       {
         "id": 8,
-        "name": "P. Đa Mai"
+        "name": "Lái xe P. Đào Viên"
       }
     ]
   },
@@ -633,11 +633,11 @@
     "seats": [
       {
         "id": 1,
-        "name": "Nhà CS P. Tự Lạn"
+        "name": "Nhà CS P. Nếnh"
       },
       {
         "id": 2,
-        "name": "Nhà CS P. Nếnh"
+        "name": "Nhà CS P. Tự Lạn"
       },
       {
         "id": 3,
@@ -670,35 +670,35 @@
     "seats": [
       {
         "id": 1,
-        "name": "P. Phúc Thuận"
+        "name": "Lái xe Xã Điềm Thụy"
       },
       {
         "id": 2,
-        "name": "Xã Điểm Thụy"
+        "name": "Lái xe P. Vạn Xuân"
       },
       {
         "id": 3,
-        "name": "Xã Kha Sơn"
+        "name": "Lái xe Xã Kha Sơn"
       },
       {
         "id": 4,
-        "name": "Xã Thành Công"
+        "name": "Lái xe Xã Thành Công"
       },
       {
         "id": 5,
-        "name": "KVPT 3. BN"
+        "name": "Lái xe KVPT 3. BN"
       },
       {
         "id": 6,
-        "name": "(Lái xe)"
+        "name": "Lái xe KVPT 2. BN"
       },
       {
         "id": 7,
-        "name": "KVPT 2. BN"
+        "name": "Lái xe P. Trung Thành"
       },
       {
         "id": 8,
-        "name": "P. Trung Thành"
+        "name": "Lái xe P. Phúc Thuận"
       }
     ]
   },
@@ -707,35 +707,35 @@
     "seats": [
       {
         "id": 1,
-        "name": "Sư đoàn"
+        "name": "Lái xe KVPT 4. BN"
       },
       {
         "id": 2,
-        "name": "KVPT 4. BN"
+        "name": "Lái xe Sư đoàn"
       },
       {
         "id": 3,
-        "name": "Sư đoàn"
+        "name": "Lái xe Sư đoàn"
       },
       {
         "id": 4,
-        "name": "Xã Tân Thành"
+        "name": ""
       },
       {
         "id": 5,
-        "name": "(Lái xe)"
+        "name": "Lái xe Xã Tân Thành"
       },
       {
         "id": 6,
-        "name": "Xã Chi Lăng"
+        "name": "Lái xe Xã Chi Lăng"
       },
       {
         "id": 7,
-        "name": "Xã Tân Thành"
+        "name": "Lái xe Xã Tân Thành"
       },
       {
         "id": 8,
-        "name": "Xã Chi Lăng"
+        "name": "Lái xe Xã Chi Lăng"
       }
     ]
   }

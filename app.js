@@ -936,6 +936,31 @@ function exportData() {
   downloadAnchor.remove();
 }
 
+async function reloadFromOriginalJson() {
+  if (confirm("Bạn có chắc chắn muốn nạp lại danh sách đại biểu từ file data.json gốc? Thao tác này sẽ ghi đè dữ liệu hiện tại.")) {
+    try {
+      const response = await fetch('data.json?t=' + new Date().getTime());
+      if (response.ok) {
+        const remoteData = await response.json();
+        if (Array.isArray(remoteData) && remoteData.length === 20) {
+          seatingData = remoteData;
+          saveToLocalStorage();
+          renderGuestLayout();
+          renderAdminTableList();
+          clearSearch();
+          alert("Đã nạp và đồng bộ danh sách đại biểu từ data.json gốc thành công!");
+        } else {
+          alert("Lỗi: Dữ liệu data.json không đúng định dạng.");
+        }
+      } else {
+        alert("Không thể tải file data.json từ máy chủ.");
+      }
+    } catch (e) {
+      alert("Lỗi kết nối khi tải data.json: " + e.message);
+    }
+  }
+}
+
 function importData(event) {
   const file = event.target.files[0];
   if (!file) return;
