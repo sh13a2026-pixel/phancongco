@@ -5,6 +5,40 @@ let seatingData = []; // Array of 20 tables, each having an array of 8 seat obje
 let appBaseUrl = "";
 let selectedDelegate = null; // { name, tableIndex, seatIndex }
 
+// CẤU HÌNH KẾT NỐI REALTIME (FIREBASE)
+// Sau khi tạo dự án Firebase Realtime Database miễn phí, hãy dán cấu hình của bạn vào đây:
+const firebaseConfig = {
+  apiKey: "",
+  authDomain: "",
+  databaseURL: "", // Điền đường dẫn Realtime Database, ví dụ: "https://ten-du-an-rtdb.firebaseio.com"
+  projectId: "",
+  storageBucket: "",
+  messagingSenderId: "",
+  appId: ""
+};
+
+let firebaseDbRef = null;
+let isFirebaseActive = false;
+
+// Hàm tìm đại biểu theo tên
+function findDelegateByName(name) {
+  let found = null;
+  seatingData.forEach((table, tIndex) => {
+    table.seats.forEach((seat, sIndex) => {
+      if (seat.name.toLowerCase() === name.toLowerCase()) {
+        found = {
+          name: seat.name,
+          tableNumber: table.tableNumber,
+          seatId: seat.id,
+          tIndex,
+          sIndex
+        };
+      }
+    });
+  });
+  return found;
+}
+
 // Clean Vietnamese signs for search matching
 function removeVietnameseTones(str) {
   str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
@@ -24,42 +58,85 @@ function removeVietnameseTones(str) {
   // Some system encode combiner characters
   str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // Huyền, sắc, ngã, hỏi, nặng
   str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ă, Ơ, Ư
-  // Remove spaces and special chars if needed, but here we just convert to lowercase for comparison
   return str.toLowerCase().trim();
 }
 
 // Initialize default data (Tải đồng bộ từ data.json nếu có, nếu không dùng localStorage)
 async function initDefaultData() {
-  let loadedData = null;
-  try {
-    // Thử tải data.json từ máy chủ (nếu chạy online hoặc đã đẩy file lên repo GitHub)
-    const response = await fetch('data.json?t=' + new Date().getTime());
-    if (response.ok) {
-      const remoteData = await response.json();
-      if (Array.isArray(remoteData) && remoteData.length === 20) {
-        loadedData = remoteData;
-        console.log("Đã tải dữ liệu mâm cỗ đồng bộ từ data.json");
-      }
-    }
-  } catch (e) {
-    console.log("Không tìm thấy data.json hoặc chưa chạy trên máy chủ, sử dụng dữ liệu localStorage cục bộ.");
-  }
+  // Kích hoạt kết nối Firebase Realtime nếu được cấu hình
+  if (firebaseConfig.databaseURL && typeof firebase !== 'undefined') {
+    try {
+      firebase.initializeApp(firebaseConfig);
+      firebaseDbRef = firebase.database().ref('seating_data');
+      isFirebaseActive = true;
+      console.log("Đã kết nối thành công tới Firebase Realtime Database.");
+      
+      // Lắng nghe sự kiện thay đổi dữ liệu thời gian thực
+      firebaseDbRef.on('value', (snapshot) => {
+        const data = snapshot.val();
+        if (data && Array.isArray(data) && data.length === 20) {
+          seatingData = data;
+          localStorage.setItem('banquet_seating_data', JSON.stringify(seatingData));
+          
+          renderGuestLayout();
+          updateStats();
+          
+          // Vẽ lại đường dẫn định vị nếu đang có khách được chọn
+          if (selectedDelegate) {
+            const found = findDelegateByName(selectedDelegate.name);
+            if (found) {
+              selectedDelegate = found;
+              drawRoutingPath(found.tableNumber);
+            } else {
+              clearSearch();
+            }
+          }
+        }
+      });
 
-  if (loadedData) {
-    seatingData = loadedData;
-    // Đồng bộ ngược lại localStorage để hoạt động offline sau đó
-    localStorage.setItem('banquet_seating_data', JSON.stringify(seatingData));
-  } else {
-    const localData = localStorage.getItem('banquet_seating_data');
-    if (localData) {
-      try {
+      // Load nhanh cache local trước khi Firebase trả kết quả
+      const localData = localStorage.getItem('banquet_seating_data');
+      if (localData) {
         seatingData = JSON.parse(localData);
-      } catch (e) {
-        console.error("Lỗi parse data local, tạo mới.", e);
+      } else {
         generateEmptyData();
       }
+    } catch (err) {
+      console.error("Lỗi kết nối Firebase Realtime Database. Chuyển sang dự phòng:", err);
+      isFirebaseActive = false;
+    }
+  }
+
+  if (!isFirebaseActive) {
+    let loadedData = null;
+    try {
+      const response = await fetch('data.json?t=' + new Date().getTime());
+      if (response.ok) {
+        const remoteData = await response.json();
+        if (Array.isArray(remoteData) && remoteData.length === 20) {
+          loadedData = remoteData;
+          console.log("Đã tải dữ liệu mâm cỗ đồng bộ từ data.json");
+        }
+      }
+    } catch (e) {
+      console.log("Không tìm thấy data.json hoặc chưa chạy trên máy chủ, sử dụng dữ liệu localStorage cục bộ.");
+    }
+
+    if (loadedData) {
+      seatingData = loadedData;
+      localStorage.setItem('banquet_seating_data', JSON.stringify(seatingData));
     } else {
-      generateEmptyData();
+      const localData = localStorage.getItem('banquet_seating_data');
+      if (localData) {
+        try {
+          seatingData = JSON.parse(localData);
+        } catch (e) {
+          console.error("Lỗi parse data local, tạo mới.", e);
+          generateEmptyData();
+        }
+      } else {
+        generateEmptyData();
+      }
     }
   }
 
@@ -91,6 +168,10 @@ function generateEmptyData() {
 function saveToLocalStorage() {
   localStorage.setItem('banquet_seating_data', JSON.stringify(seatingData));
   updateStats();
+  // Ghi đè trực tiếp lên Firebase Realtime Database nếu kích hoạt
+  if (isFirebaseActive && firebaseDbRef) {
+    firebaseDbRef.set(seatingData);
+  }
 }
 
 function saveAppUrl() {
