@@ -175,6 +175,21 @@ function saveToLocalStorage() {
   }
 }
 
+function syncDataToFirebase() {
+  if (isFirebaseActive && firebaseDbRef) {
+    firebaseDbRef.set(seatingData)
+      .then(() => {
+        alert("Đã đồng bộ lên mạng thành công! Từ bây giờ tất cả thiết bị khác quét mã QR sẽ thấy sơ đồ mâm cỗ mới ngay lập tức mà không cần tải lại trang.");
+      })
+      .catch((error) => {
+        console.error("Lỗi đồng bộ Firebase:", error);
+        alert("Lỗi kết nối Firebase: Không có quyền ghi dữ liệu. Bạn đã sửa Rules trên Firebase chưa? Hãy kiểm tra bảng điều khiển lỗi của trình duyệt (F12) để biết chi tiết.");
+      });
+  } else {
+    alert("Firebase chưa được kích hoạt thành công trên trang này. Vui lòng kiểm tra cấu hình firebaseConfig ở đầu tệp app.js.");
+  }
+}
+
 function saveAppUrl() {
   const urlInput = document.getElementById('app-base-url').value.trim();
   appBaseUrl = urlInput || (window.location.origin + window.location.pathname.replace(/\/$/, ""));
