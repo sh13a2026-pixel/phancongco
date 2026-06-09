@@ -1194,6 +1194,12 @@ body {
 }
 
 @media (max-width: 480px) {
+  .title-group .subtitle {
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
   .tables-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
