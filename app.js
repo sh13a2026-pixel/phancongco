@@ -4,7 +4,7 @@
 let seatingData = []; // Array of 20 tables, each having an array of 8 seat objects: { id: 1..8, name: "" }
 let appBaseUrl = "";
 let selectedDelegate = null; // { name, tableIndex, seatIndex }
-let layoutConfig = { colsPc: 4, colsMobile: 2 };
+let layoutConfig = { colsPc: 4, colsMobile: 3 };
 let firebaseColsRef = null;
 let unassignedDelegates = []; // Array of names: ["Nguyễn Văn A", "Trần Thị B"]
 let firebasePoolRef = null;

@@ -1176,7 +1176,7 @@ body {
   }
 
   .tables-grid {
-    grid-template-columns: repeat(var(--cols-mobile, 2), 1fr);
+    grid-template-columns: repeat(var(--cols-mobile, 3), 1fr);
   }
   
   .admin-seats-grid {
@@ -1201,16 +1201,59 @@ body {
   }
 
   .tables-grid {
-    grid-template-columns: repeat(var(--cols-mobile, 2), 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(var(--cols-mobile, 3), 1fr);
+    gap: 8px;
+  }
+  
+  .table-node-wrapper {
+    padding: 8px 3px;
+    border-radius: 12px;
+    gap: 6px;
+  }
+
+  .table-node-wrapper .btn {
+    padding: 3px 6px !important;
+    font-size: 0.65rem !important;
+    margin-top: 4px;
+  }
+
+  .table-node {
+    width: 62px;
+    height: 62px;
+    border-width: 1.5px;
   }
   
   .table-node .table-num {
-    font-size: 1.1rem;
+    font-size: 0.8rem;
   }
 
   .table-node .table-count {
-    font-size: 0.65rem;
+    font-size: 0.55rem;
+    margin-top: 1px;
+  }
+
+  .mini-seat {
+    width: 6px;
+    height: 6px;
+  }
+
+  .mini-seat.active-target {
+    width: 8px;
+    height: 8px;
+  }
+
+  .table-names-list {
+    gap: 3px;
+  }
+
+  .table-names-list .name-item {
+    font-size: 0.62rem;
+    padding: 1px 3px;
+    border-radius: 3px;
+  }
+
+  .table-names-list .name-item.empty {
+    font-size: 0.6rem;
   }
 
   .detail-pill {
