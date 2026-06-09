@@ -224,7 +224,7 @@
               </div>
             </div>
             
-            <div class="admin-tables-list" id="admin-tables-container">
+            <div class="tables-grid" id="admin-tables-container">
               <!-- Dynamically generated in app.js -->
             </div>
           </div>
@@ -252,6 +252,43 @@
         
         <div class="modal-seats-list" id="modal-seats-list">
           <!-- List of names for easy reading on mobile -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Edit Table visually for Admin -->
+    <div id="admin-edit-modal" class="modal-overlay" onclick="closeAdminEditModal(event)">
+      <div class="modal-content glass-panel" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeAdminEditModal(null)"><i class="fa-solid fa-xmark"></i></button>
+        <h3 id="admin-edit-table-title">Cấu hình Mâm số X</h3>
+        <p class="modal-subtitle">Chạm vào ghế bất kỳ để xếp/xóa đại biểu</p>
+        
+        <div class="table-zoom-container">
+          <!-- Outer circle (Chairs) -->
+          <div class="seats-ring" id="admin-edit-seats-ring">
+            <!-- Dynamically generated chairs in app.js -->
+          </div>
+          <!-- Center table circle -->
+          <div class="center-table-plate">
+            <span id="admin-edit-center-label">MÂM X</span>
+          </div>
+        </div>
+        
+        <!-- Editor form for the selected seat -->
+        <div class="admin-seat-editor-panel" id="admin-seat-editor-panel" style="margin-top: 20px; border-top: 1px solid var(--border-glass); padding-top: 15px;">
+          <h4 style="margin-bottom: 10px; color: var(--gold-main); font-size: 0.95rem;">Đang chọn: <span id="admin-selected-seat-label">Ghế 1</span></h4>
+          <div class="search-box-container" style="max-width: 100%; position: relative;">
+            <input type="text" id="admin-edit-seat-input" placeholder="Nhập tên hoặc chọn từ danh sách chờ..." style="width: 100%; padding: 12px; border-radius: 8px; border: 1.5px solid var(--border-glass); background: var(--bg-secondary); color: var(--text-primary); font-family: var(--font-sans); outline: none;">
+            <div id="admin-edit-pool-dropdown" class="pool-dropdown" style="width: 100%;"></div>
+          </div>
+          <div style="display: flex; gap: 10px; margin-top: 15px; justify-content: center;">
+            <button class="btn btn-secondary" id="admin-edit-seat-qr-btn" style="padding: 8px 15px; font-size: 0.85rem;">
+              <i class="fa-solid fa-qrcode"></i> Tạo mã QR ghế
+            </button>
+            <button class="btn btn-danger" onclick="clearCurrentAdminSeat()" style="padding: 8px 15px; font-size: 0.85rem; background: rgba(232, 65, 24, 0.2); color: #ff7675; border: 1px solid rgba(232, 65, 24, 0.4);">
+              <i class="fa-solid fa-eraser"></i> Xóa ghế này
+            </button>
+          </div>
         </div>
       </div>
     </div>

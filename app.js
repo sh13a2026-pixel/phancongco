@@ -369,58 +369,88 @@ function renderAdminTableList() {
   container.innerHTML = "";
 
   seatingData.forEach((table, tIndex) => {
-    const row = document.createElement('div');
-    row.className = 'admin-table-row';
+    const occupiedCount = table.seats.filter(s => s.name.trim() !== "").length;
+    
+    // Tạo phần tử bọc ngoài (Wrapper)
+    const wrapper = document.createElement('div');
+    wrapper.className = 'table-node-wrapper';
+    wrapper.id = `admin-table-wrapper-${table.tableNumber}`;
 
-    // Label and quick QR
-    const labelCol = document.createElement('div');
-    labelCol.className = 'admin-table-label-col';
-    labelCol.innerHTML = `
-      <div class="admin-table-label">Mâm ${table.tableNumber}</div>
-      <button class="btn btn-secondary" style="padding: 6px 10px; font-size: 0.75rem; margin-top: 5px;" onclick="generateTableQr(${table.tableNumber})">
-        <i class="fa-solid fa-qrcode"></i> QR Mâm
-      </button>
+    // Tạo mâm cỗ (Circle node)
+    const tableNode = document.createElement('div');
+    tableNode.className = 'table-node';
+    tableNode.id = `admin-table-${table.tableNumber}`;
+    tableNode.onclick = () => openAdminEditModal(tIndex);
+
+    // Vẽ text mâm và số lượng
+    tableNode.innerHTML = `
+      <span class="table-num">Mâm ${table.tableNumber}</span>
+      <span class="table-count">${occupiedCount}/8</span>
     `;
-    row.appendChild(labelCol);
 
-    // 8 seat inputs
-    const seatsGrid = document.createElement('div');
-    seatsGrid.className = 'admin-seats-grid';
+    // Vẽ 8 ghế mini xung quanh mâm cỗ
+    const seatsIndicator = document.createElement('div');
+    seatsIndicator.className = 'mini-seats-indicator';
+    
+    for (let s = 0; s < 8; s++) {
+      const angle = (s * 45 - 90) * (Math.PI / 180);
+      const radius = 52; // Tỷ lệ khoảng cách
+      const x = 50 + radius * Math.cos(angle);
+      const y = 50 + radius * Math.sin(angle);
+      
+      const seatPill = document.createElement('div');
+      seatPill.className = 'mini-seat';
+      
+      const isOccupied = table.seats[s].name.trim() !== "";
+      if (isOccupied) {
+        seatPill.classList.add('occupied');
+      }
+      
+      seatPill.id = `admin-mini-seat-${table.tableNumber}-${s + 1}`;
+      seatPill.style.left = `${x}%`;
+      seatPill.style.top = `${y}%`;
+      
+      seatsIndicator.appendChild(seatPill);
+    }
+    
+    tableNode.appendChild(seatsIndicator);
+    wrapper.appendChild(tableNode);
 
-    table.seats.forEach((seat, sIndex) => {
-      const seatBox = document.createElement('div');
-      seatBox.className = 'seat-input-container';
+    // Nút in nhanh QR mâm
+    const qrBtn = document.createElement('button');
+    qrBtn.className = 'btn btn-secondary';
+    qrBtn.style.padding = '5px 10px';
+    qrBtn.style.fontSize = '0.75rem';
+    qrBtn.style.width = '100%';
+    qrBtn.style.marginTop = '8px';
+    qrBtn.innerHTML = `<i class="fa-solid fa-qrcode"></i> Mã QR Mâm`;
+    qrBtn.onclick = (e) => {
+      e.stopPropagation(); // Ngăn mở modal cấu hình
+      generateTableQr(table.tableNumber);
+    };
+    wrapper.appendChild(qrBtn);
 
-      // Input field
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.className = 'seat-name-input';
-      input.value = seat.name;
-      input.placeholder = `Ghế ${seat.id}...`;
-      input.oninput = (e) => updateSeatName(tIndex, sIndex, e.target.value);
-      input.onfocus = () => showPoolDropdown(input, tIndex, sIndex);
-      input.onblur = () => setTimeout(() => hidePoolDropdown(tIndex, sIndex), 250);
-      input.onkeyup = (e) => filterPoolDropdown(e.target.value, tIndex, sIndex);
+    // Vẽ danh sách tên đại biểu hiển thị trực quan ngay dưới mâm cỗ
+    const namesList = document.createElement('div');
+    namesList.className = 'table-names-list';
 
-      // Mini actions for individual seats (like QR generator for seat)
-      const qrBtn = document.createElement('button');
-      qrBtn.style.background = 'none';
-      qrBtn.style.border = 'none';
-      qrBtn.style.color = seat.name.trim() !== "" ? 'var(--gold-main)' : 'rgba(255,255,255,0.1)';
-      qrBtn.style.cursor = seat.name.trim() !== "" ? 'pointer' : 'default';
-      qrBtn.disabled = seat.name.trim() === "";
-      qrBtn.title = seat.name.trim() !== "" ? `Tạo QR cho ${seat.name}` : "";
-      qrBtn.innerHTML = `<i class="fa-solid fa-qrcode"></i>`;
-      qrBtn.onclick = () => generateDelegateQr(seat.name, table.tableNumber, seat.id);
+    const occupiedSeats = table.seats.filter(s => s.name.trim() !== "");
+    if (occupiedSeats.length > 0) {
+      occupiedSeats.forEach(seat => {
+        const nameItem = document.createElement('div');
+        nameItem.className = 'name-item';
+        nameItem.textContent = seat.name;
+        namesList.appendChild(nameItem);
+      });
+    } else {
+      const emptyItem = document.createElement('div');
+      emptyItem.className = 'name-item empty';
+      emptyItem.textContent = 'Mâm trống';
+      namesList.appendChild(emptyItem);
+    }
 
-      seatBox.innerHTML = `<span class="seat-num-indicator">${seat.id}</span>`;
-      seatBox.appendChild(input);
-      seatBox.appendChild(qrBtn);
-      seatsGrid.appendChild(seatBox);
-    });
-
-    row.appendChild(seatsGrid);
-    container.appendChild(row);
+    wrapper.appendChild(namesList);
+    container.appendChild(wrapper);
   });
 }
 
@@ -1187,6 +1217,229 @@ function assignFromPool(name, tIndex, sIndex) {
   renderAdminTableList();
   updateStats();
   updatePoolUI();
+}
+
+// 10. VISUAL EDIT MODAL FOR ADMIN
+let adminActiveTableIndex = null;
+let adminActiveSeatIndex = 0;
+
+function openAdminEditModal(tIndex) {
+  adminActiveTableIndex = tIndex;
+  adminActiveSeatIndex = 0; // Mặc định chọn ghế đầu tiên (Ghế 1)
+
+  const table = seatingData[tIndex];
+  document.getElementById('admin-edit-table-title').textContent = `CẤU HÌNH MÂM SỐ ${table.tableNumber}`;
+  document.getElementById('admin-edit-center-label').textContent = `MÂM ${table.tableNumber}`;
+
+  renderAdminEditSeatsRing();
+  selectAdminEditSeat(0);
+
+  document.getElementById('admin-edit-modal').classList.add('active');
+}
+
+function renderAdminEditSeatsRing() {
+  if (adminActiveTableIndex === null) return;
+  const table = seatingData[adminActiveTableIndex];
+  const ring = document.getElementById('admin-edit-seats-ring');
+  ring.innerHTML = "";
+
+  for (let i = 0; i < 8; i++) {
+    const seat = table.seats[i];
+    const angle = (i * 45 - 90) * (Math.PI / 180);
+    const radius = 125;
+    const x = 160 + radius * Math.cos(angle);
+    const y = 160 + radius * Math.sin(angle);
+
+    const seatNode = document.createElement('div');
+    seatNode.className = 'seat-node';
+    seatNode.style.left = `${x}px`;
+    seatNode.style.top = `${y}px`;
+
+    if (i === adminActiveSeatIndex) {
+      seatNode.classList.add('active-target');
+    }
+
+    const nameText = seat.name.trim();
+    if (nameText === "") {
+      seatNode.classList.add('empty');
+      seatNode.innerHTML = `
+        <span class="seat-num">${seat.id}</span>
+        <span class="seat-name">Trống</span>
+      `;
+    } else {
+      seatNode.innerHTML = `
+        <span class="seat-num">${seat.id}</span>
+        <span class="seat-name">${nameText}</span>
+      `;
+    }
+
+    seatNode.onclick = () => selectAdminEditSeat(i);
+    ring.appendChild(seatNode);
+  }
+}
+
+function selectAdminEditSeat(sIndex) {
+  adminActiveSeatIndex = sIndex;
+  
+  // Highlight ghế đang chọn trên vòng tròn
+  const ring = document.getElementById('admin-edit-seats-ring');
+  const seatNodes = ring.querySelectorAll('.seat-node');
+  seatNodes.forEach((node, idx) => {
+    if (idx === sIndex) {
+      node.classList.add('active-target');
+    } else {
+      node.classList.remove('active-target');
+    }
+  });
+
+  const table = seatingData[adminActiveTableIndex];
+  const seat = table.seats[sIndex];
+
+  document.getElementById('admin-selected-seat-label').textContent = `Ghế ${seat.id}`;
+  
+  const input = document.getElementById('admin-edit-seat-input');
+  input.value = seat.name;
+
+  // Ràng buộc nút in QR cho ghế đang chọn
+  const qrBtn = document.getElementById('admin-edit-seat-qr-btn');
+  if (seat.name.trim() !== "") {
+    qrBtn.disabled = false;
+    qrBtn.onclick = () => generateDelegateQr(seat.name, table.tableNumber, seat.id);
+    qrBtn.style.opacity = '1';
+  } else {
+    qrBtn.disabled = true;
+    qrBtn.onclick = null;
+    qrBtn.style.opacity = '0.5';
+  }
+
+  // Setup input key listeners & pool dropdown cho ô nhập trong modal này
+  input.onfocus = () => showAdminEditPoolDropdown(input);
+  input.onblur = () => setTimeout(() => hideAdminEditPoolDropdown(), 250);
+  input.onkeyup = (e) => {
+    filterAdminEditPoolDropdown(e.target.value);
+    updateAdminEditSeatName(e.target.value);
+  };
+}
+
+function updateAdminEditSeatName(name) {
+  if (adminActiveTableIndex === null) return;
+  const oldName = seatingData[adminActiveTableIndex].seats[adminActiveSeatIndex].name.trim();
+  const newName = name.trim();
+
+  // Trả tên cũ về bể danh sách chờ
+  if (oldName !== "" && oldName !== newName) {
+    if (!unassignedDelegates.includes(oldName)) {
+      unassignedDelegates.push(oldName);
+      localStorage.setItem('banquet_unassigned_pool', JSON.stringify(unassignedDelegates));
+      if (isFirebaseActive && firebasePoolRef) {
+        firebasePoolRef.set(unassignedDelegates);
+      }
+      updatePoolUI();
+    }
+  }
+
+  // Xóa khỏi bể danh sách chờ nếu gõ tay khớp
+  if (newName !== "" && unassignedDelegates.includes(newName)) {
+    unassignedDelegates = unassignedDelegates.filter(n => n !== newName);
+    localStorage.setItem('banquet_unassigned_pool', JSON.stringify(unassignedDelegates));
+    if (isFirebaseActive && firebasePoolRef) {
+      firebasePoolRef.set(unassignedDelegates);
+    }
+    updatePoolUI();
+  }
+
+  seatingData[adminActiveTableIndex].seats[adminActiveSeatIndex].name = name;
+  saveToLocalStorage();
+
+  // Cập nhật nhãn tên trực tiếp trên ghế của modal
+  const ring = document.getElementById('admin-edit-seats-ring');
+  const seatNode = ring.children[adminActiveSeatIndex];
+  if (seatNode) {
+    const seatId = adminActiveSeatIndex + 1;
+    if (newName === "") {
+      seatNode.classList.add('empty');
+      seatNode.innerHTML = `
+        <span class="seat-num">${seatId}</span>
+        <span class="seat-name">Trống</span>
+      `;
+    } else {
+      seatNode.classList.remove('empty');
+      seatNode.innerHTML = `
+        <span class="seat-num">${seatId}</span>
+        <span class="seat-name">${newName}</span>
+      `;
+    }
+  }
+
+  // Cập nhật lại các sơ đồ và bảng thống kê
+  renderGuestLayout();
+  renderAdminTableList();
+  updateStats();
+}
+
+function clearCurrentAdminSeat() {
+  const input = document.getElementById('admin-edit-seat-input');
+  input.value = "";
+  updateAdminEditSeatName("");
+  selectAdminEditSeat(adminActiveSeatIndex);
+}
+
+function closeAdminEditModal(e) {
+  if (e === null || e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close')) {
+    document.getElementById('admin-edit-modal').classList.remove('active');
+    adminActiveTableIndex = null;
+  }
+}
+
+// Trợ giúp bể chờ trên Modal
+function showAdminEditPoolDropdown(input) {
+  const dropdown = document.getElementById('admin-edit-pool-dropdown');
+  if (!dropdown) return;
+  renderAdminEditPoolDropdownItems(dropdown, input.value);
+  dropdown.style.display = 'block';
+}
+
+function hideAdminEditPoolDropdown() {
+  const dropdown = document.getElementById('admin-edit-pool-dropdown');
+  if (dropdown) dropdown.style.display = 'none';
+}
+
+function filterAdminEditPoolDropdown(val) {
+  const dropdown = document.getElementById('admin-edit-pool-dropdown');
+  if (dropdown) renderAdminEditPoolDropdownItems(dropdown, val);
+}
+
+function renderAdminEditPoolDropdownItems(dropdown, filterVal) {
+  dropdown.innerHTML = "";
+  const query = removeVietnameseTones(filterVal);
+
+  const filtered = unassignedDelegates.filter(name => {
+    if (!query) return true;
+    return removeVietnameseTones(name).includes(query);
+  });
+
+  if (filtered.length === 0) {
+    dropdown.innerHTML = `<div class="pool-dropdown-item no-match">Không có ai trong danh sách chờ</div>`;
+    return;
+  }
+
+  filtered.forEach(name => {
+    const item = document.createElement('div');
+    item.className = 'pool-dropdown-item';
+    item.textContent = name;
+    item.onmousedown = (e) => {
+      e.preventDefault();
+      assignFromAdminPool(name);
+    };
+    dropdown.appendChild(item);
+  });
+}
+
+function assignFromAdminPool(name) {
+  const input = document.getElementById('admin-edit-seat-input');
+  input.value = name;
+  updateAdminEditSeatName(name);
+  selectAdminEditSeat(adminActiveSeatIndex);
 }
 
 // 8. ON APP LOAD
